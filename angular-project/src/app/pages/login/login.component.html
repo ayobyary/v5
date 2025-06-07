@@ -1,27 +1,39 @@
-<div class="min-h-screen flex items-center justify-center bg-white p-4">
-  <div class="bg-white rounded-[32px] w-full max-w-[1000px] h-[600px] flex overflow-hidden shadow-2xl">
-    <!-- Login Form Section -->
-    <div class="w-1/2 p-12 flex flex-col">
-      <div class="mb-12">
+<div class="min-h-screen flex items-center justify-center bg-white p-2 sm:p-4">
+  <div class="bg-white rounded-2xl w-full max-w-4xl h-auto flex flex-col md:flex-row overflow-hidden shadow-2xl">
+    <!-- اسلایدشو فقط در موبایل نمایش داده می‌شود (زیر md) -->
+    <div class="w-full flex items-center justify-center block md:hidden">
+      <div class="bg-gray-100  sm:w-full sm:max-h-96 rounded-2xl overflow-hidden flex items-center justify-center">
+        <img [src]="slides[currentSlide].image"
+             [alt]="slides[currentSlide].alt"
+             class="w-full h-full object-cover object-center transition-opacity duration-500 mobile-img-320">
+      </div>
+    </div>
+    <!-- فرم لاگین همیشه نمایش داده می‌شود -->
+    <div class="w-full md:w-1/2 p-6 sm:p-10 md:p-12 flex flex-col justify-center">
+      <div class="mb-12 show-on-md-up" >
         <h1 class="text-[32px] font-bold text-gray-800 flex items-center gap-2">
           Welcome back
           <span class="wave-emoji">👋</span>
         </h1>
         <p class="text-gray-600 mt-2">Please enter your details.</p>
       </div>
-
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4 flex-grow">
-        <button type="button" class="w-full py-3 px-4 border border-gray-300 rounded-xl flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors">
-          <img src="assets/icons/apple.svg" alt="Apple" class="w-5 h-5">
-          <span class="text-gray-700">Log in with Apple</span>
-        </button>
-
-        <div class="flex items-center gap-3 my-4">
-          <div class="h-[1px] bg-gray-200 flex-grow"></div>
-          <span class="text-gray-500 text-sm">or</span>
-          <div class="h-[1px] bg-gray-200 flex-grow"></div>
+        <!-- Apple & Google login buttons and separator: only visible on md+ -->
+        <div class="hidden md:flex flex-col gap-2">
+          <button type="button" class="w-full py-3 px-4 border border-gray-300 rounded-xl flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors" (click)="onSocialLogin('apple')">
+            <img src="assets/icons/apple.svg" alt="Apple" class="w-5 h-5">
+            <span class="text-gray-700">Log in with Apple</span>
+          </button>
+          <button type="button" class="w-full py-3 px-4 border border-gray-300 rounded-xl flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors" (click)="onSocialLogin('google')">
+            <img src="assets/icons/google.svg" alt="Google" class="w-5 h-5">
+            <span class="text-gray-700">Log in with Google</span>
+          </button>
+          <div class="flex items-center gap-3 my-4">
+            <div class="h-[1px] bg-gray-200 flex-grow"></div>
+            <span class="text-gray-500 text-sm">or</span>
+            <div class="h-[1px] bg-gray-200 flex-grow"></div>
+          </div>
         </div>
-
         <div class="space-y-4">
           <div class="relative">
             <input type="email" formControlName="username" 
@@ -32,7 +44,6 @@
             <mat-error *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.hasError('email')" 
                       class="text-sm text-red-500 mt-1">Please enter a valid email</mat-error>
           </div>
-
           <div class="relative">
             <input [type]="hidePassword ? 'password' : 'text'" formControlName="password" 
                    class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-pink-500 focus:ring focus:ring-pink-200 transition-all outline-none"
@@ -46,7 +57,23 @@
                       class="text-sm text-red-500 mt-1">Password is required</mat-error>
           </div>
         </div>
-
+        <!-- Separator: only visible on mobile, between fields and social buttons -->
+        <div class="flex items-center gap-3 my-4 flex md:hidden">
+          <div class="h-[1px] bg-gray-200 flex-grow"></div>
+          <span class="text-gray-500 text-sm">or</span>
+          <div class="h-[1px] bg-gray-200 flex-grow"></div>
+        </div>
+        <!-- Apple & Google login buttons: only visible on mobile -->
+        <div class="flex flex-col gap-2 flex md:hidden">
+          <button type="button" class="w-full py-3 px-4 border border-gray-300 rounded-xl flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors" (click)="onSocialLogin('apple')">
+            <img src="assets/icons/apple.svg" alt="Apple" class="w-5 h-5">
+            <span class="text-gray-700">Log in with Apple</span>
+          </button>
+          <button type="button" class="w-full py-3 px-4 border border-gray-300 rounded-xl flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors" (click)="onSocialLogin('google')">
+            <img src="assets/icons/google.svg" alt="Google" class="w-5 h-5">
+            <span class="text-gray-700">Log in with Google</span>
+          </button>
+        </div>
         <div class="flex items-center justify-between mt-2">
           <label class="flex items-center gap-2 cursor-pointer">
             <input type="checkbox" class="form-checkbox h-4 w-4 text-pink-500 rounded border-gray-300">
@@ -54,7 +81,6 @@
           </label>
           <a href="#" class="text-sm text-pink-500 hover:text-pink-600 transition-colors">Forgot password?</a>
         </div>
-
         <div class="mt-auto space-y-4">
           <button type="submit" 
                   [disabled]="loginForm.invalid || isLoading"
@@ -62,7 +88,6 @@
             <mat-spinner *ngIf="isLoading" [diameter]="24" class="mr-2"></mat-spinner>
             <span>{{isLoading ? 'Signing in...' : 'Log in'}}</span>
           </button>
-
           <p class="text-center text-gray-600">
             Don't have an account? 
             <a href="#" class="text-pink-500 hover:text-pink-600 transition-colors">Sign up</a>
@@ -70,12 +95,11 @@
         </div>
       </form>
     </div>
-
-    <!-- Image Slider Section (Simple, No Buttons, No Dots) -->
-    <div class="w-1/2 flex items-center justify-center bg-gray-100">
+    <!-- اگر می‌خواهید تصویر در دسکتاپ هم نمایش داده شود، این بخش را فعال کنید (در حال حاضر غیرفعال است) -->
+    <div class="hidden md:flex md:w-1/2 items-center justify-center bg-gray-100 min-h-0 h-auto">
       <img [src]="slides[currentSlide].image"
            [alt]="slides[currentSlide].alt"
-           class="w-full h-full object-cover object-center rounded-xl transition-opacity duration-500" />
+           class="w-full h-full max-h-full object-cover object-center rounded-l-2xl transition-opacity duration-500" />
     </div>
   </div>
 </div> 

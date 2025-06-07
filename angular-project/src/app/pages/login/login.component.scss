@@ -319,4 +319,40 @@ mat-error {
     width: 16px;
     margin-right: 4px;
   }
+}
+
+.show-on-md-up {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .show-on-md-up {
+    display: block;
+  }
+}
+
+.mobile-img-320 {
+  /* پیش‌فرض بدون محدودیت */
+}
+
+@media (max-width: 320px) {
+  .mobile-img-320 {
+    width: 100%;
+    max-height: 24rem; /* معادل max-h-96 در Tailwind */
+  }
+} 
+@media (max-width: 768px) {
+  .mobile-img-320 {
+ 
+    height: 100%;
+    max-height: 24rem; /* معادل max-h-96 در Tailwind */
+  }
+}
+
+@media (min-width: 320px) and (max-width: 720px) {
+  .tablet-parent {
+    padding: 24px; // یا هر استایل دیگری که می‌خواهید
+    background: #f8fafc;
+    // سایر استایل‌ها
+  }
 } 
