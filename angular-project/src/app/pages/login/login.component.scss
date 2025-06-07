@@ -1,0 +1,322 @@
+:host {
+  display: block;
+}
+
+.wave-emoji {
+  animation: wave 2s infinite;
+  transform-origin: 70% 70%;
+  display: inline-block;
+}
+
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+  60% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+// Form Checkbox Styles
+.form-checkbox {
+  @apply rounded border-gray-300;
+  &:checked {
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+  }
+}
+
+// Input Focus Ring
+input:focus {
+  @apply ring-2 ring-pink-200 border-pink-500;
+  outline: none;
+}
+
+// Loading Spinner Color Override
+::ng-deep {
+  .mat-mdc-progress-spinner {
+    --mdc-circular-progress-active-indicator-color: #ffffff;
+  }
+}
+
+// Button disabled state
+button:disabled {
+  @apply opacity-70 cursor-not-allowed;
+}
+
+// Smooth transitions
+button, a, input {
+  @apply transition-all duration-200;
+}
+
+// Error message animation
+mat-error {
+  animation: slideIn 0.2s ease-out;
+}
+
+// Slider Styles
+.slider-container {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    
+    &.opacity-100 {
+      opacity: 1;
+    }
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  // Navigation Buttons
+  .nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    z-index: 3;
+    cursor: pointer;
+
+    &:hover:not([disabled]) {
+      background: rgba(0, 0, 0, 0.6);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px white;
+    }
+
+    &[disabled] {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    mat-icon {
+      font-size: 24px;
+      display: block;
+    }
+  }
+
+  &:hover {
+    .nav-button:not([disabled]) {
+      opacity: 1;
+    }
+  }
+}
+
+// Navigation Arrows
+.nav-arrow {
+  @apply absolute top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full 
+         opacity-0 transition-opacity duration-300 cursor-pointer z-10;
+
+  &:hover {
+    @apply bg-black/50;
+  }
+}
+
+// Dots Navigation
+.dots-nav {
+  @apply absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-10;
+  
+  .dot {
+    @apply w-2 h-2 rounded-full transition-all duration-300 cursor-pointer;
+    
+    &.active {
+      @apply bg-white scale-125;
+    }
+    
+    &:not(.active) {
+      @apply bg-white/50 hover:bg-white/70;
+    }
+  }
+}
+
+// Show navigation on hover
+.group:hover {
+  .nav-arrow {
+    @apply opacity-100;
+  }
+}
+
+// Image hover effect
+.image-section {
+  img {
+    transition: transform 0.7s ease-in-out;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// Custom shadow for the container
+.shadow-custom {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+mat-card {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: cardAppear 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25) !important;
+  }
+}
+
+.mat-mdc-card-header {
+  padding: 0;
+}
+
+// Keyframe Animations
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+::ng-deep {
+  // Form Fields
+  .mat-mdc-form-field {
+    .mat-mdc-form-field-flex {
+      background-color: rgba(255, 255, 255, 0.8) !important;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+
+      &:focus-within {
+        background-color: rgba(255, 255, 255, 0.95) !important;
+        transform: translateY(-1px);
+      }
+    }
+
+    .mat-mdc-form-field-infix {
+      padding: 0.5em 0;
+    }
+
+    .mat-mdc-floating-label {
+      transition: all 0.3s ease;
+    }
+
+    &.mat-focused {
+      .mat-mdc-floating-label {
+        color: #3b82f6;
+      }
+    }
+  }
+
+  // Checkbox
+  .mat-mdc-checkbox {
+    .mdc-checkbox {
+      padding: 0;
+      margin-right: 8px;
+      transition: all 0.2s ease;
+    }
+
+    &:hover .mdc-checkbox {
+      transform: scale(1.05);
+    }
+  }
+
+  // Buttons
+  .mat-mdc-raised-button {
+    &.mat-primary {
+      .mat-icon {
+        margin-right: 8px;
+        animation: slideIn 0.3s ease-out;
+      }
+    }
+
+    &:disabled {
+      opacity: 0.7;
+    }
+  }
+
+  // Social Buttons
+  .social-button {
+    min-width: unset;
+    width: 44px;
+    height: 44px;
+    border-radius: 22px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-color: rgba(0, 0, 0, 0.1);
+
+    .mat-icon {
+      height: 24px;
+      width: 24px;
+      transition: all 0.3s ease;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+      border-color: rgba(0, 0, 0, 0.2);
+      transform: translateY(-1px);
+
+      .mat-icon {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  // Loading Spinner
+  .mat-mdc-progress-spinner {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  // Language Menu
+  .mat-mdc-menu-panel {
+    border-radius: 12px;
+    overflow: hidden;
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  .mat-mdc-menu-item {
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba(59, 130, 246, 0.1);
+    }
+  }
+}
+
+// Error Messages
+mat-error {
+  display: flex;
+  align-items: center;
+  animation: slideIn 0.3s ease-out;
+  
+  .mat-icon {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+  }
+} 
