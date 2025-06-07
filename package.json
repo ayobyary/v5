@@ -1,0 +1,14 @@
+{
+  "name": "v5",
+  "version": "1.0.0",
+  "description": "Full Stack Angular + Node.js Project",
+  "scripts": {
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd angular-project && ng serve",
+    "install-all": "npm install && cd backend && npm install && cd ../angular-project && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+} 

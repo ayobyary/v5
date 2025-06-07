@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 import { interval, Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +21,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   isLoading = false;
   currentSlide = 0;
   private autoSlideSubscription?: Subscription;
+  errorMessage = '';
 
   slides = [
     {
@@ -46,7 +49,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private authService: AuthService,
+    private router: Router
   ) {
     this.registerSocialIcons();
   }
@@ -97,12 +102,25 @@ export class LoginComponent implements OnInit, OnDestroy {
   async onSubmit() {
     if (this.loginForm.valid) {
       this.isLoading = true;
+      this.errorMessage = '';
+      
       try {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        console.log('Form submitted:', this.loginForm.value);
-      } catch (error) {
+        const { username, password } = this.loginForm.value;
+        const response = await this.authService.login(username, password).toPromise();
+        console.log('Login response:', response);
+        
+        // ذخیره توکن در localStorage
+        localStorage.setItem('token', response.token);
+        
+        // هدایت کاربر بر اساس نقش
+        if (response.role === 'admin') {
+          this.router.navigate(['/admin/dashboard']);
+        } else {
+          this.router.navigate(['/user/dashboard']);
+        }
+      } catch (error: any) {
         console.error('Login error:', error);
+        this.errorMessage = error.error?.message || 'An error occurred during login';
       } finally {
         this.isLoading = false;
       }
@@ -111,5 +129,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onSocialLogin(provider: string) {
     console.log(`Logging in with ${provider}`);
+    // پیاده‌سازی ورود با شبکه‌های اجتماعی در آینده
   }
 } 
