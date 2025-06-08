@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/register', async (req, res) => {
   try {
-    const { email, password, role } = req.body;
+    const { email, password, role, phone } = req.body;
     
     // بررسی وجود کاربر
     if (users.find(u => u.email === email)) {
@@ -21,7 +21,8 @@ router.post('/register', async (req, res) => {
       id: Date.now(),
       email,
       passwordHash,
-      role: role || 'user'
+      role: role || 'user',
+      phone: phone || ''
     };
     
     users.push(newUser);
