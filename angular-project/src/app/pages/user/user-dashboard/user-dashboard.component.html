@@ -1,19 +1,109 @@
-<div class="min-h-screen bg-gray-100 p-6">
-  <div class="max-w-7xl mx-auto">
-    <div class="bg-white rounded-lg shadow-lg p-6">
-      <h1 class="text-2xl font-bold text-gray-800 mb-4">User Dashboard</h1>
-      
-      <div *ngIf="userData" class="space-y-4">
-        <div class="bg-gray-50 p-4 rounded-lg">
-          <h2 class="text-lg font-semibold text-gray-700">Welcome, {{userData.user.email}}!</h2>
-          <p class="text-gray-600 mt-2">{{userData.message}}</p>
+<div class="min-h-screen w-screen bg-[#f6f6f6] flex flex-col items-center py-4">
+  <div class="w-full max-w-[1600px] min-h-[90vh] rounded-3xl bg-white shadow-lg p-6 flex flex-col gap-8">
+    <!-- Header -->
+    <header class="flex items-center justify-between pb-2 border-b border-gray-200">
+      <div class="flex items-center font-bold text-xl tracking-tight">
+        PUREM <span class="ml-1 text-xs font-normal text-gray-500">ODA</span>
+      </div>
+      <nav class="hidden md:flex gap-8 text-sm font-medium">
+        <a href="#" class="hover:text-black text-gray-700">WOMENSWEAR</a>
+        <a href="#" class="hover:text-black text-gray-700">MENSWEAR</a>
+        <a href="#" class="hover:text-black text-gray-700">KIDS</a>
+        <a href="#" class="hover:text-red-600 text-red-500">SALE</a>
+        <a href="#" class="hover:text-black text-gray-700">DISCOVER</a>
+      </nav>
+      <div class="flex items-center gap-4">
+        <button class="text-gray-500 hover:text-black"><span class="material-icons">search</span></button>
+        <button class="text-gray-500 hover:text-black"><span class="material-icons">favorite_border</span></button>
+        <button class="text-gray-500 hover:text-black"><span class="material-icons">shopping_bag</span></button>
+        <button (click)="logout()" class="text-gray-500 hover:text-black" title="Logout"><span class="material-icons">logout</span></button>
+      </div>
+    </header>
+
+    <!-- Main Responsive Grid -->
+    <div class="flex-1 grid grid-cols-1 lg:grid-cols-6 gap-8 w-full h-full">
+      <!-- Left: Text + Cards -->
+      <div class="flex flex-col justify-between h-full gap-8 lg:col-span-3">
+        <!-- Text Box -->
+        <div class="bg-[#f6f6f6] rounded-2xl p-8 flex flex-col justify-between h-full min-h-[300px]">
+          <div>
+            <div class="flex items-center mb-2">
+              <h1 class="text-4xl md:text-5xl font-black leading-none tracking-tight mr-2">FOR</h1>
+              <span class="flex-1 border-t-2 border-black mt-3 ml-2"></span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-black leading-none tracking-tight">EVERYONE BUT</h1>
+            <h1 class="text-4xl md:text-5xl font-black leading-none tracking-tight">NOTANYONE</h1>
+          </div>
+          <p class="text-gray-700 text-base mt-6">
+            We establish personal relationships with our boutiques, to make sure each is vetted for a stress-free shopping experience
+          </p>
+        </div>
+        <!-- Cards -->
+        <div class="grid grid-cols-3 gap-6 mt-4">
+          <div class="relative rounded-2xl overflow-hidden h-40 bg-gray-900 group cursor-pointer" (click)="exploreCategory('ripstop')">
+            <img src="assets/images/Black &amp; Silver Metallic Woven Hat.jpeg" alt="Ripstop" class="object-cover w-full h-full opacity-90 group-hover:opacity-100 transition" />
+            <div class="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-10 transition"></div>
+            <div class="absolute bottom-3 left-3">
+              <span class="text-white text-lg font-bold drop-shadow">#RIPSTOP</span>
+            </div>
+          </div>
+          <div class="relative rounded-2xl overflow-hidden h-40 bg-gray-900 group cursor-pointer" (click)="exploreCategory('ripstop')">
+            <img src="assets/images/Black &amp; Silver Metallic Woven Hat.jpeg" alt="Ripstop" class="object-cover w-full h-full opacity-90 group-hover:opacity-100 transition" />
+            <div class="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-10 transition"></div>
+            <div class="absolute bottom-3 left-3">
+              <span class="text-white text-lg font-bold drop-shadow">#RIPSTOP</span>
+            </div>
+          </div>
+          <div class="relative rounded-2xl overflow-hidden h-40 bg-green-700 group cursor-pointer" (click)="exploreCategory('insulated')">
+            <img src="assets/images/download.jpeg" alt="Insulated" class="object-cover w-full h-full opacity-90 group-hover:opacity-100 transition" />
+            <div class="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition"></div>
+            <div class="absolute bottom-3 left-3">
+              <span class="text-white text-lg font-bold drop-shadow">#INSULATED</span>
+            </div>
+          </div>
         </div>
       </div>
+      <!-- Right: Main Image and Buttons -->
+      <div class="relative rflex flex-col justify-between h-full gap-8 lg:col-span-3 rounded-2xl overflow-hidden bg-gray-200 w-full aspect-[4/3] ">
+        <img 
+          [src]="mainImages[currentImageIndex]" 
+          alt="Main Model" 
+          class="object-cover w-full h-full transition-all duration-700" />
+        
+        <!-- دکمه‌های اسلایدشو -->
+        <button (click)="prevImage()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-70 hover:bg-opacity-100 rounded-full p-2 shadow">
+          <span class="material-icons">chevron_left</span>
+        </button>
+        <button (click)="nextImage()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-70 hover:bg-opacity-100 rounded-full p-2 shadow">
+          <span class="material-icons">chevron_right</span>
+        </button>
 
-      <div *ngIf="!userData" class="text-center py-8">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
-        <p class="mt-4 text-gray-600">Loading user data...</p>
+        <!-- دکمه‌های اصلی داشبورد -->
+        <button (click)="shopNow()" class="absolute top-8 right-8 bg-white text-black px-6 py-2 rounded-full font-semibold shadow hover:bg-black hover:text-white transition">SHOP NOW</button>
+        <div class="absolute bottom-8 left-8 flex gap-4">
+          <button (click)="learnMore()" class="bg-white text-black px-6 py-2 rounded-full font-semibold shadow hover:bg-black hover:text-white transition">LEARN MORE</button>
+          <button (click)="contactUs()" class="bg-white text-black px-6 py-2 rounded-full font-semibold shadow hover:bg-black hover:text-white transition">CONTACT US</button>
+        </div>
+
+        <!-- نقاط اسلایدشو -->
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+          <button *ngFor="let img of mainImages; let i = index"
+                  (click)="goToImage(i)"
+                  [class.bg-black]="i === currentImageIndex"
+                  class="w-3 h-3 rounded-full bg-white border border-black transition-all"
+                  [style.opacity]="i === currentImageIndex ? 1 : 0.5"></button>
+        </div>
       </div>
+      <!-- Left: Text + Cards -->
+     
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="!userData" class="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50">
+    <div class="text-center">
+      <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-black mx-auto"></div>
+      <p class="mt-4 text-gray-700 text-lg">Loading your dashboard...</p>
     </div>
   </div>
 </div> 
