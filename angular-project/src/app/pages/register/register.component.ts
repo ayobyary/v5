@@ -39,7 +39,7 @@ export class RegisterComponent {
       this.successMessage = '';
       const { email, phone, password } = this.registerForm.value;
       try {
-        await this.authService.register(email, password, 'user', phone).toPromise();
+        await this.authService.register({ email, password, role: 'user', phone }).toPromise();
         this.successMessage = 'Registration successful! You can now log in.';
         setTimeout(() => this.router.navigate(['/login']), 1500);
       } catch (error: any) {

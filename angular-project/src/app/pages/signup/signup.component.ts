@@ -42,10 +42,11 @@ export class SignupComponent implements OnInit {
       this.errorMessage = '';
       
       try {
-        await this.authService.register(email, password).toPromise();
+        const { email, password } = this.signupForm.value;
+        await this.authService.register({ email, password, role: 'user' }).toPromise();
         this.router.navigate(['/login']);
       } catch (error: any) {
-        console.error('Signup error:', error);
+        console.error('Signup failed:', error);
         this.errorMessage = error.error?.message || 'An error occurred during signup';
       } finally {
         this.isLoading = false;
