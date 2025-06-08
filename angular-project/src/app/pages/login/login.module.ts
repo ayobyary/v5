@@ -10,10 +10,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { RegisterComponent } from './register.component';
+import { LoginComponent } from './login.component';
 
 @NgModule({
-  declarations: [RegisterComponent],
+  declarations: [LoginComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -26,4 +26,4 @@ import { RegisterComponent } from './register.component';
     MatProgressSpinnerModule
   ]
 })
-export class RegisterModule { } 
+export class LoginModule { } 
