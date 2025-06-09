@@ -172,4 +172,30 @@ input:focus {
 .material-icons {
   font-size: 22px;
   vertical-align: middle;
+}
+
+.dashboard-container {
+  padding: 20px;
+  
+  .dashboard-header {
+    margin-bottom: 24px;
+    
+    h1 {
+      font-size: 24px;
+      font-weight: 500;
+      color: #333;
+    }
+  }
+  
+  .dashboard-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    
+    .stats-cards, .recent-activities {
+      mat-card {
+        height: 100%;
+      }
+    }
+  }
 } 

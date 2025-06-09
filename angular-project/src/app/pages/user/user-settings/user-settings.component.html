@@ -1,0 +1,41 @@
+<div class="settings-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>تنظیمات حساب کاربری</mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <form [formGroup]="settingsForm" (ngSubmit)="onSettingsSubmit()">
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>زبان</mat-label>
+            <mat-select formControlName="language">
+              <mat-option value="fa">فارسی</mat-option>
+              <mat-option value="en">English</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>تم</mat-label>
+            <mat-select formControlName="theme">
+              <mat-option value="light">روشن</mat-option>
+              <mat-option value="dark">تیره</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-checkbox formControlName="notifications">
+            دریافت اعلان‌ها
+          </mat-checkbox>
+        </div>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="settingsForm.invalid">
+            ذخیره تغییرات
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div> 

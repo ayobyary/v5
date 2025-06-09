@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
-import { interval, Subscription } from 'rxjs';
+import { interval, Subscription, firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
@@ -106,17 +106,19 @@ export class LoginComponent implements OnInit, OnDestroy {
       
       try {
         const { username, password } = this.loginForm.value;
-        const response = await this.authService.login(username, password).toPromise();
+        const response = await firstValueFrom(this.authService.login(username, password));
         console.log('Login response:', response);
         
-        // ذخیره توکن در localStorage
-        localStorage.setItem('token', response.token);
-        
-        // هدایت کاربر بر اساس نقش
-        if (response.role === 'admin') {
-          this.router.navigate(['/admin/dashboard']);
+        if (response && response.token) {
+          localStorage.setItem('token', response.token);
+          
+          if (response.role === 'admin') {
+            this.router.navigate(['/admin/dashboard']);
+          } else {
+            this.router.navigate(['/user/dashboard']);
+          }
         } else {
-          this.router.navigate(['/user/dashboard']);
+          this.errorMessage = 'Invalid response from server';
         }
       } catch (error: any) {
         console.error('Login error:', error);
