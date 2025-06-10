@@ -52,6 +52,17 @@
         </button>
       </div>
 
+      <!-- Body Type Analysis -->
+      <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <h3 class="text-xl font-semibold mb-4 text-right">تحلیل ساختار بدنی</h3>
+        <div class="grid grid-cols-1 gap-6">
+          <div *ngFor="let proportion of bodyProportions | filter:'category':'composition'" class="bg-gray-50 rounded-xl p-4">
+            <h4 class="font-medium text-right mb-2">{{ proportion.name }}</h4>
+            <p class="text-gray-600 text-right whitespace-pre-line">{{ proportion.analysis }}</p>
+          </div>
+        </div>
+      </div>
+
       <!-- Measurements -->
       <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
         <h3 class="text-xl font-semibold mb-4 text-right">اندازه‌های اصلی</h3>
@@ -101,20 +112,6 @@
           <h3 class="text-xl font-semibold mb-4 text-right">تناسبات کلی</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div *ngFor="let proportion of bodyProportions | filter:'category':'overall'" class="bg-gray-50 rounded-xl p-4">
-              <h4 class="font-medium text-right mb-2">{{ proportion.name }}</h4>
-              <p class="text-lg font-semibold text-pink-500 text-right mb-2">
-                {{ proportion.value.toFixed(2) }}
-              </p>
-              <p class="text-gray-600 text-right">{{ getProportionAnalysis(proportion) }}</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Body Composition -->
-        <div class="bg-white rounded-xl shadow-lg p-6">
-          <h3 class="text-xl font-semibold mb-4 text-right">تحلیل ترکیب بدنی</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div *ngFor="let proportion of bodyProportions | filter:'category':'composition'" class="bg-gray-50 rounded-xl p-4">
               <h4 class="font-medium text-right mb-2">{{ proportion.name }}</h4>
               <p class="text-lg font-semibold text-pink-500 text-right mb-2">
                 {{ proportion.value.toFixed(2) }}

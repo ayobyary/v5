@@ -1,19 +1,5 @@
 import { Injectable } from '@angular/core';
-
-export interface BodyMeasurement {
-  id: string;
-  name: string;
-  description: string;
-  unit: string;
-  value: number | null;
-}
-
-export interface BodyProportion {
-  name: string;
-  value: number;
-  category: 'upper' | 'lower' | 'overall' | 'composition';
-  analysis: string;
-}
+import { BodyMeasurement, BodyProportion } from '../interfaces/body-measurement.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,137 +8,135 @@ export class BodyProportionsService {
   constructor() {}
 
   calculateProportions(measurements: BodyMeasurement[]): BodyProportion[] {
-    const measurementsMap = new Map(measurements.map(m => [m.id, m.value]));
+    const measurementsMap = new Map(measurements.map(m => [m.id, m]));
     const proportions: BodyProportion[] = [];
 
     // Helper function to check if required measurements exist
     const hasRequiredMeasurements = (ids: string[]): boolean => {
-      return ids.every(id => measurementsMap.has(id) && measurementsMap.get(id) !== null);
+      return ids.every(id => measurementsMap.has(id) && measurementsMap.get(id)?.value !== null);
     };
+
+    // Helper function to create a proportion
+    const createProportion = (name: string, value: number, category: BodyProportion['category']): BodyProportion => ({
+      id: name.toLowerCase().replace(/\s+/g, '-'),
+      name,
+      value,
+      category
+    });
 
     // Helper function to calculate ratio
-    const calculateRatio = (numerator: number, denominator: number): number => {
-      return denominator !== 0 ? numerator / denominator : 0;
-    };
-
-    // Helper function to create proportion
-    const createProportion = (name: string, value: number, category: 'upper' | 'lower' | 'overall' | 'composition'): BodyProportion => {
-      return {
-        name,
-        value,
-        category,
-        analysis: this.getProportionAnalysis({ name, value, category, analysis: '' })
-      };
+    const calculateRatio = (a: number, b: number): number => {
+      return b !== 0 ? a / b : 0;
     };
 
     // Upper Body Proportions
     if (hasRequiredMeasurements(['chest', 'waist'])) {
-      const chest = measurementsMap.get('chest')!;
-      const waist = measurementsMap.get('waist')!;
+      const chest = measurementsMap.get('chest')!.value!;
+      const waist = measurementsMap.get('waist')!.value!;
       proportions.push(createProportion('نسبت سینه به کمر', calculateRatio(chest, waist), 'upper'));
     }
 
     if (hasRequiredMeasurements(['highBust', 'chest'])) {
-      const highBust = measurementsMap.get('highBust')!;
-      const chest = measurementsMap.get('chest')!;
+      const highBust = measurementsMap.get('highBust')!.value!;
+      const chest = measurementsMap.get('chest')!.value!;
       proportions.push(createProportion('نسبت بالای سینه به سینه', calculateRatio(highBust, chest), 'upper'));
     }
 
     if (hasRequiredMeasurements(['shoulder', 'chest'])) {
-      const shoulder = measurementsMap.get('shoulder')!;
-      const chest = measurementsMap.get('chest')!;
+      const shoulder = measurementsMap.get('shoulder')!.value!;
+      const chest = measurementsMap.get('chest')!.value!;
       proportions.push(createProportion('نسبت عرض شانه به سینه', calculateRatio(shoulder, chest), 'upper'));
     }
 
     if (hasRequiredMeasurements(['backWidth', 'chest'])) {
-      const backWidth = measurementsMap.get('backWidth')!;
-      const chest = measurementsMap.get('chest')!;
+      const backWidth = measurementsMap.get('backWidth')!.value!;
+      const chest = measurementsMap.get('chest')!.value!;
       proportions.push(createProportion('نسبت عرض کتف به سینه', calculateRatio(backWidth, chest), 'upper'));
     }
 
     if (hasRequiredMeasurements(['upperBackWidth', 'backWidth'])) {
-      const upperBackWidth = measurementsMap.get('upperBackWidth')!;
-      const backWidth = measurementsMap.get('backWidth')!;
+      const upperBackWidth = measurementsMap.get('upperBackWidth')!.value!;
+      const backWidth = measurementsMap.get('backWidth')!.value!;
       proportions.push(createProportion('نسبت عرض پشت بالای کمر به عرض کتف', calculateRatio(upperBackWidth, backWidth), 'upper'));
     }
 
     if (hasRequiredMeasurements(['armhole', 'chest'])) {
-      const armhole = measurementsMap.get('armhole')!;
-      const chest = measurementsMap.get('chest')!;
+      const armhole = measurementsMap.get('armhole')!.value!;
+      const chest = measurementsMap.get('chest')!.value!;
       proportions.push(createProportion('نسبت دور زیر بغل به سینه', calculateRatio(armhole, chest), 'upper'));
     }
 
     // Lower Body Proportions
     if (hasRequiredMeasurements(['waist', 'hip'])) {
-      const waist = measurementsMap.get('waist')!;
-      const hip = measurementsMap.get('hip')!;
+      const waist = measurementsMap.get('waist')!.value!;
+      const hip = measurementsMap.get('hip')!.value!;
       proportions.push(createProportion('نسبت کمر به باسن', calculateRatio(waist, hip), 'lower'));
     }
 
     if (hasRequiredMeasurements(['waistToHipLength', 'height'])) {
-      const waistToHipLength = measurementsMap.get('waistToHipLength')!;
-      const height = measurementsMap.get('height')!;
+      const waistToHipLength = measurementsMap.get('waistToHipLength')!.value!;
+      const height = measurementsMap.get('height')!.value!;
       proportions.push(createProportion('نسبت طول کمر تا باسن به قد', calculateRatio(waistToHipLength, height), 'lower'));
     }
 
     if (hasRequiredMeasurements(['thigh', 'hip'])) {
-      const thigh = measurementsMap.get('thigh')!;
-      const hip = measurementsMap.get('hip')!;
+      const thigh = measurementsMap.get('thigh')!.value!;
+      const hip = measurementsMap.get('hip')!.value!;
       proportions.push(createProportion('نسبت ران به باسن', calculateRatio(thigh, hip), 'lower'));
     }
 
     if (hasRequiredMeasurements(['calf', 'thigh'])) {
-      const calf = measurementsMap.get('calf')!;
-      const thigh = measurementsMap.get('thigh')!;
+      const calf = measurementsMap.get('calf')!.value!;
+      const thigh = measurementsMap.get('thigh')!.value!;
       proportions.push(createProportion('نسبت ساق پا به ران', calculateRatio(calf, thigh), 'lower'));
     }
 
     // Overall Proportions
     if (hasRequiredMeasurements(['height', 'weight'])) {
-      const height = measurementsMap.get('height')! / 100; // Convert to meters
-      const weight = measurementsMap.get('weight')!;
+      const height = measurementsMap.get('height')!.value! / 100; // Convert to meters
+      const weight = measurementsMap.get('weight')!.value!;
       const bmi = weight / (height * height);
       proportions.push(createProportion('شاخص توده بدنی (BMI)', bmi, 'overall'));
     }
 
     if (hasRequiredMeasurements(['torsoFront', 'torsoBack'])) {
-      const torsoFront = measurementsMap.get('torsoFront')!;
-      const torsoBack = measurementsMap.get('torsoBack')!;
+      const torsoFront = measurementsMap.get('torsoFront')!.value!;
+      const torsoBack = measurementsMap.get('torsoBack')!.value!;
       proportions.push(createProportion('نسبت طول تنه جلو به پشت', calculateRatio(torsoFront, torsoBack), 'overall'));
     }
 
     if (hasRequiredMeasurements(['waistHeight', 'height'])) {
-      const waistHeight = measurementsMap.get('waistHeight')!;
-      const height = measurementsMap.get('height')!;
+      const waistHeight = measurementsMap.get('waistHeight')!.value!;
+      const height = measurementsMap.get('height')!.value!;
       proportions.push(createProportion('نسبت ارتفاع کمر به قد', calculateRatio(waistHeight, height), 'overall'));
     }
 
     // Body Composition Analysis
     if (hasRequiredMeasurements(['wrist', 'height'])) {
-      const wrist = measurementsMap.get('wrist')!;
-      const height = measurementsMap.get('height')!;
+      const wrist = measurementsMap.get('wrist')!.value!;
+      const height = measurementsMap.get('height')!.value!;
       proportions.push(createProportion('نسبت مچ دست به قد', calculateRatio(wrist, height), 'composition'));
     }
 
     if (hasRequiredMeasurements(['forearm', 'bicep'])) {
-      const forearm = measurementsMap.get('forearm')!;
-      const bicep = measurementsMap.get('bicep')!;
+      const forearm = measurementsMap.get('forearm')!.value!;
+      const bicep = measurementsMap.get('bicep')!.value!;
       proportions.push(createProportion('نسبت ساعد به بازو', calculateRatio(forearm, bicep), 'composition'));
     }
 
     if (hasRequiredMeasurements(['chest', 'fullChest'])) {
-      const chest = measurementsMap.get('chest')!;
-      const fullChest = measurementsMap.get('fullChest')!;
+      const chest = measurementsMap.get('chest')!.value!;
+      const fullChest = measurementsMap.get('fullChest')!.value!;
       proportions.push(createProportion('ظرفیت ریه', fullChest - chest, 'composition'));
     }
 
     // Body Fat and Muscle Mass Calculations
     if (hasRequiredMeasurements(['height', 'weight', 'waist', 'neck', 'hip'])) {
-      const height = measurementsMap.get('height')!;
-      const weight = measurementsMap.get('weight')!;
-      const waist = measurementsMap.get('waist')!;
-      const neck = measurementsMap.get('neck')!;
-      const hip = measurementsMap.get('hip')!;
+      const height = measurementsMap.get('height')!.value!;
+      const weight = measurementsMap.get('weight')!.value!;
+      const waist = measurementsMap.get('waist')!.value!;
+      const neck = measurementsMap.get('neck')!.value!;
+      const hip = measurementsMap.get('hip')!.value!;
 
       // Body Fat Percentage (US Navy Method)
       const bodyFat = this.calculateBodyFat(height, weight, waist, neck, hip);
@@ -166,6 +150,16 @@ export class BodyProportionsService {
       const muscleMass = this.estimateMuscleMass(weight, bodyFat);
       proportions.push(createProportion('تخمین حجم عضله', muscleMass, 'composition'));
     }
+
+    // Add body type analysis
+    const bodyType = this.determineBodyType(measurementsMap);
+    proportions.push({
+      id: 'bodyType',
+      name: 'نوع ساختار بدنی',
+      value: 0,
+      category: 'composition',
+      analysis: this.getBodyTypeAnalysis(bodyType)
+    });
 
     return proportions;
   }
@@ -345,5 +339,69 @@ export class BodyProportionsService {
     if (mass > 30) return 'حجم عضله بالا (مزومورف)';
     if (mass < 20) return 'حجم عضله پایین';
     return 'حجم عضله متوسط';
+  }
+
+  private determineBodyType(measurements: Map<string, BodyMeasurement>): 'ectomorph' | 'mesomorph' | 'endomorph' {
+    const height = measurements.get('height')?.value || 0;
+    const weight = measurements.get('weight')?.value || 0;
+    const shoulderWidth = measurements.get('shoulderWidth')?.value || 0;
+    const hipWidth = measurements.get('hipWidth')?.value || 0;
+    const waist = measurements.get('waist')?.value || 0;
+
+    // Calculate BMI
+    const heightInMeters = height / 100;
+    const bmi = weight / (heightInMeters * heightInMeters);
+
+    // Calculate shoulder to hip ratio
+    const shoulderHipRatio = shoulderWidth / hipWidth;
+
+    // Calculate waist to height ratio
+    const waistHeightRatio = waist / height;
+
+    // Determine body type based on measurements
+    if (bmi < 18.5 && shoulderHipRatio < 1.1) {
+      return 'ectomorph';
+    } else if (bmi >= 18.5 && bmi < 25 && shoulderHipRatio >= 1.1) {
+      return 'mesomorph';
+    } else {
+      return 'endomorph';
+    }
+  }
+
+  private getBodyTypeAnalysis(bodyType: 'ectomorph' | 'mesomorph' | 'endomorph'): string {
+    switch (bodyType) {
+      case 'ectomorph':
+        return `ساختار بدنی شما اکتومورف است. توصیه‌های استایل:
+        - استفاده از لباس‌های حجم‌دهنده
+        - انتخاب رنگ‌های روشن و گرم
+        - استفاده از برش‌های افقی
+        - لایه‌بندی لباس‌ها
+        - استفاده از پارچه‌های با بافت ضخیم
+        - پرهیز از لباس‌های خیلی تنگ
+        - استفاده از جزئیات و تزئینات حجم‌دهنده`;
+
+      case 'mesomorph':
+        return `ساختار بدنی شما مزومورف است. توصیه‌های استایل:
+        - استفاده از لباس‌های جذب و خوش‌فرم
+        - انتخاب برش‌های تمیز و دقیق
+        - استفاده از پارچه‌های با کشش مناسب
+        - نمایش خطوط بدن
+        - استفاده از رنگ‌های متنوع
+        - پرهیز از لباس‌های خیلی گشاد
+        - استفاده از جزئیات ظریف`;
+
+      case 'endomorph':
+        return `ساختار بدنی شما اندومورف است. توصیه‌های استایل:
+        - استفاده از لباس‌های آزاد و راحت
+        - انتخاب رنگ‌های تیره و خنثی
+        - استفاده از برش‌های عمودی
+        - لایه‌بندی هوشمندانه
+        - استفاده از پارچه‌های نازک و روان
+        - پرهیز از لباس‌های خیلی تنگ
+        - استفاده از جزئیات عمودی`;
+
+      default:
+        return 'تعیین نوع ساختار بدنی نیاز به اطلاعات بیشتری دارد.';
+    }
   }
 } 
