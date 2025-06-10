@@ -30,6 +30,11 @@ import { UserSavedComponent } from './user-saved/user-saved.component';
 import { UserStyleComponent } from './user-style/user-style.component';
 import { UserDiscoverComponent } from './user-discover/user-discover.component';
 
+import { InterestsComponent } from './user-profile/user-profile-interests/interests/interests.component';
+import { StylesMeComponent } from './user-profile/user-profile-styles/styles-me/styles-me.component';
+import { BodyComponent } from './user-profile/body/body.component';
+
+
 const routes: Routes = [
   {
     path: '',
@@ -37,15 +42,21 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: UserDashboardComponent },
+      { 
+        path: 'PROILE', 
+        component: UserProfileComponent,
+        children: [
+          { path: '', redirectTo: 'body', pathMatch: 'full' },
+          { path: 'body', component:BodyComponent },
+          { path: 'interests', component:InterestsComponent  },
+          { path: 'styles',component:StylesMeComponent},
+          { path: 'settings', component: UserSettingsComponent }
+        ]
+      },
       { path: 'collection', component: UserCollectionComponent },
       { path: 'saved', component: UserSavedComponent },
       { path: 'style', component: UserStyleComponent },
-      { path: 'discover', component: UserDiscoverComponent },
-      { path: 'profile', component: UserProfileComponent },
-      { path: 'settings', component: UserSettingsComponent },
-      { path: 'notifications', component: UserNotificationsComponent },
-      { path: 'messages', component: UserMessagesComponent },
-    
+      { path: 'discover', component: UserDiscoverComponent }
     ]
   }
 ];

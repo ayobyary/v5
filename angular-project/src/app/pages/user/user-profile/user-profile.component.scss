@@ -23,4 +23,120 @@
   mat-form-field {
     width: 100%;
   }
+}
+
+// Vertical Navbar Styles
+nav {
+  button {
+    position: relative;
+    overflow: hidden;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2px;
+      height: 0;
+      background-color: #000;
+      transition: height 0.3s ease;
+      border-radius: 1px;
+    }
+    
+    &:hover::after,
+    &.active::after {
+      height: 60%;
+    }
+    
+    &.active {
+      background-color: #f3f4f6;
+      
+      .material-icons {
+        color: #000;
+      }
+    }
+  }
+}
+
+// Container styles
+.relative {
+  @media (max-width: 1024px) {
+    aspect-ratio: auto;
+    min-height: auto;
+  }
+}
+
+// Smooth transitions
+.transition-all {
+  transition: all 0.3s ease-in-out;
+}
+
+// Group hover effects
+.group {
+  &:hover {
+    transform: translateX(-2px);
+  }
+}
+
+// Material Icons
+.material-icons {
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+// Mobile menu button
+.lg\:hidden {
+  .material-icons {
+    font-size: 22px;
+  }
+}
+
+// Responsive styles
+@media (max-width: 1024px) {
+  nav {
+    button {
+      &::after {
+        display: none;
+      }
+      
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+  }
+  
+  .group:hover {
+    transform: translateY(-2px);
+  }
+}
+
+// Mobile specific styles
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1rem;
+  }
+  
+  nav button {
+    padding: 0.5rem;
+  }
+  
+  .material-icons {
+    font-size: 18px;
+  }
+}
+
+// Hover effects for mobile
+@media (hover: none) {
+  .group:hover {
+    transform: none;
+  }
+  
+  nav button:hover::after {
+    height: 0;
+  }
+  
+  nav button.active::after {
+    height: 60%;
+  }
 } 

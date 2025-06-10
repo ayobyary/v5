@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-user-layout',
@@ -9,6 +10,9 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class UserLayoutComponent {
   isSidenavOpen = true;
+
+  isMenuOpen = false;
+
 
   constructor(
     private authService: AuthService,
@@ -23,4 +27,9 @@ export class UserLayoutComponent {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
+
+  @ViewChild('drawer') drawer!: MatSidenav;
+  isWide = true; // یا بر اساس عرض صفحه تعیین کن
+
 } 

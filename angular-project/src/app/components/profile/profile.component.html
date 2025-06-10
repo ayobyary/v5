@@ -1,0 +1,38 @@
+<div class="profile-container flex h-full">
+  <!-- Sidebar -->
+  <div class="sidebar w-64 bg-gray-100 p-4 border-r border-gray-200">
+    <nav class="space-y-2">
+      <button *ngFor="let section of sections"
+              (click)="setActiveSection(section.id)"
+              [class.active]="activeSection === section.id"
+              class="w-full text-right p-3 rounded-lg transition-colors duration-200 flex items-center justify-end space-x-2 space-x-reverse hover:bg-gray-200"
+              [class.bg-gray-200]="activeSection === section.id">
+        <span class="material-icons">{{section.icon}}</span>
+        <span>{{section.title}}</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Content Area -->
+  <div class="content flex-1 p-6">
+    <div *ngIf="activeSection === 'body'" class="body-section">
+      <h2 class="text-2xl font-bold mb-4">بدن شما</h2>
+      <!-- Add body profile content here -->
+    </div>
+
+    <div *ngIf="activeSection === 'interests'" class="interests-section">
+      <h2 class="text-2xl font-bold mb-4">علایق شما</h2>
+      <!-- Add interests content here -->
+    </div>
+
+    <div *ngIf="activeSection === 'styles'" class="styles-section">
+      <h2 class="text-2xl font-bold mb-4">استایل ها</h2>
+      <!-- Add styles content here -->
+    </div>
+
+    <div *ngIf="activeSection === 'settings'" class="settings-section">
+      <h2 class="text-2xl font-bold mb-4">تنظیمات</h2>
+      <!-- Add settings content here -->
+    </div>
+  </div>
+</div> 
