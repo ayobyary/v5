@@ -1,66 +1,129 @@
-<div class="p-4">
-  <div class="flex items-center mb-6">
-    <h2 class="text-2xl font-black leading-none tracking-tight mr-2">اندازه‌گیری بدن</h2>
-    <span class="flex-1 border-t-2 border-black mt-3 ml-2"></span>
+<div class="container mx-auto p-4">
+  <!-- Form View -->
+  <div *ngIf="!showInfo" class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold mb-6 text-right">اندازه‌گیری بدن</h2>
+      <form [formGroup]="bodyForm" (ngSubmit)="saveMeasurements()" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div *ngFor="let measurement of measurements" class="space-y-2">
+            <label [for]="measurement.id" class="block text-sm font-medium text-gray-700 text-right">
+              {{ measurement.name }}
+            </label>
+            <div class="relative">
+              <input
+                [id]="measurement.id"
+                type="number"
+                [formControlName]="measurement.id"
+                class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors"
+                [placeholder]="measurement.unit"
+              />
+              <div *ngIf="bodyForm.get(measurement.id)?.touched && bodyForm.get(measurement.id)?.errors" class="mt-1 text-sm text-red-600 text-right">
+                <div *ngIf="bodyForm.get(measurement.id)?.errors?.['required']">این فیلد الزامی است</div>
+                <div *ngIf="bodyForm.get(measurement.id)?.errors?.['min']">مقدار باید بزرگتر از 0 باشد</div>
+                <div *ngIf="bodyForm.get(measurement.id)?.errors?.['max']">مقدار باید کمتر از 300 باشد</div>
+              </div>
+            </div>
+            <p class="text-sm text-gray-500 text-right">{{ measurement.description }}</p>
+          </div>
+        </div>
+        <div class="flex justify-end">
+          <button
+            type="submit"
+            [disabled]="!bodyForm.valid"
+            class="px-6 py-2 bg-pink-500 text-white rounded-xl hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            ذخیره اندازه‌ها
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 
-  <!-- Form View -->
-  <form *ngIf="!showInfo" [formGroup]="bodyForm" (ngSubmit)="saveMeasurements()" class="space-y-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div *ngFor="let measurement of measurements" class="space-y-2">
-        <div class="relative">
-          <input type="number" 
-                 [formControlName]="measurement.id"
-                 class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-pink-500 focus:ring focus:ring-pink-200 transition-all outline-none"
-                 [placeholder]="measurement.name">
-          <div class="text-sm text-gray-500 mt-1">{{measurement.description}}</div>
-          <div *ngIf="bodyForm.get(measurement.id)?.touched && bodyForm.get(measurement.id)?.hasError('required')" 
-               class="text-sm text-red-500 mt-1">
-            این فیلد الزامی است
-          </div>
-          <div *ngIf="bodyForm.get(measurement.id)?.touched && bodyForm.get(measurement.id)?.hasError('min')" 
-               class="text-sm text-red-500 mt-1">
-            مقدار باید بزرگتر از 0 باشد
-          </div>
-          <div *ngIf="bodyForm.get(measurement.id)?.touched && bodyForm.get(measurement.id)?.hasError('max')" 
-               class="text-sm text-red-500 mt-1">
-            مقدار باید کمتر از 300 باشد
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex justify-end mt-6">
-      <button type="submit"
-              class="px-6 py-3 bg-pink-500 text-white rounded-xl hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              [disabled]="!bodyForm.valid">
-        ذخیره اندازه‌ها
-      </button>
-    </div>
-  </form>
-
   <!-- Info View -->
-  <div *ngIf="showInfo" class="space-y-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div *ngFor="let measurement of savedMeasurements" 
-           class="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-colors">
-        <div class="flex justify-between items-start">
-          <div>
-            <h3 class="font-semibold text-gray-800">{{measurement.name}}</h3>
-            <p class="text-sm text-gray-500 mt-1">{{measurement.description}}</p>
-          </div>
-          <div class="text-lg font-bold text-pink-500">
-            {{measurement.value}} {{measurement.unit}}
+  <div *ngIf="showInfo" class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-right">اندازه‌های بدن</h2>
+        <button
+          (click)="editMeasurements()"
+          class="px-4 py-2 bg-pink-500 text-white rounded-xl hover:bg-pink-600 transition-colors"
+        >
+          ویرایش اندازه‌ها
+        </button>
+      </div>
+
+      <!-- Measurements -->
+      <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <h3 class="text-xl font-semibold mb-4 text-right">اندازه‌های اصلی</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div *ngFor="let measurement of savedMeasurements" class="bg-gray-50 rounded-xl p-4">
+            <h4 class="font-medium text-right mb-2">{{ measurement.name }}</h4>
+            <p class="text-gray-600 text-right">{{ measurement.description }}</p>
+            <p class="text-lg font-semibold text-pink-500 text-right mt-2">
+              {{ measurement.value }} {{ measurement.unit }}
+            </p>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="flex justify-end mt-6">
-      <button (click)="editMeasurements()"
-              class="px-6 py-3 bg-pink-500 text-white rounded-xl hover:bg-pink-600 transition-colors">
-        ویرایش اندازه‌ها
-      </button>
+      <!-- Proportions -->
+      <div class="space-y-8">
+        <!-- Upper Body Proportions -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <h3 class="text-xl font-semibold mb-4 text-right">تناسبات بالاتنه</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div *ngFor="let proportion of bodyProportions | filter:'category':'upper'" class="bg-gray-50 rounded-xl p-4">
+              <h4 class="font-medium text-right mb-2">{{ proportion.name }}</h4>
+              <p class="text-lg font-semibold text-pink-500 text-right mb-2">
+                {{ proportion.value.toFixed(2) }}
+              </p>
+              <p class="text-gray-600 text-right">{{ getProportionAnalysis(proportion) }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lower Body Proportions -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <h3 class="text-xl font-semibold mb-4 text-right">تناسبات پایین‌تنه</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div *ngFor="let proportion of bodyProportions | filter:'category':'lower'" class="bg-gray-50 rounded-xl p-4">
+              <h4 class="font-medium text-right mb-2">{{ proportion.name }}</h4>
+              <p class="text-lg font-semibold text-pink-500 text-right mb-2">
+                {{ proportion.value.toFixed(2) }}
+              </p>
+              <p class="text-gray-600 text-right">{{ getProportionAnalysis(proportion) }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Overall Proportions -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <h3 class="text-xl font-semibold mb-4 text-right">تناسبات کلی</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div *ngFor="let proportion of bodyProportions | filter:'category':'overall'" class="bg-gray-50 rounded-xl p-4">
+              <h4 class="font-medium text-right mb-2">{{ proportion.name }}</h4>
+              <p class="text-lg font-semibold text-pink-500 text-right mb-2">
+                {{ proportion.value.toFixed(2) }}
+              </p>
+              <p class="text-gray-600 text-right">{{ getProportionAnalysis(proportion) }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Body Composition -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <h3 class="text-xl font-semibold mb-4 text-right">تحلیل ترکیب بدنی</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div *ngFor="let proportion of bodyProportions | filter:'category':'composition'" class="bg-gray-50 rounded-xl p-4">
+              <h4 class="font-medium text-right mb-2">{{ proportion.name }}</h4>
+              <p class="text-lg font-semibold text-pink-500 text-right mb-2">
+                {{ proportion.value.toFixed(2) }}
+              </p>
+              <p class="text-gray-600 text-right">{{ getProportionAnalysis(proportion) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
