@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BodyProportionsService, BodyMeasurement, BodyProportion } from '../../../../services/body-proportions.service';
+import { BodyProportionsService } from '../../../../services/body-proportions.service';
+import { BodyMeasurement, BodyProportion } from '../../../../interfaces/body-measurement.interface';
 import { FilterPipe } from '../../../../pipes/filter.pipe';
 
 @Component({
