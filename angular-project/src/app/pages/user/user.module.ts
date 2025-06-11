@@ -33,11 +33,9 @@ import { UserStyleComponent } from './user-style/user-style.component';
 import { UserDiscoverComponent } from './user-discover/user-discover.component';
 import { UserStyleDetailComponent } from './user-style/user-style-detail/user-style-detail.component';
 import { AllStyleComponent } from './all-style/all-style.component';
-
 import { InterestsComponent } from './user-profile/user-profile-interests/interests/interests.component';
 import { StylesMeComponent } from './user-profile/user-profile-styles/styles-me/styles-me.component';
 import { BodyComponent } from './user-profile/body/body.component';
-
 
 const routes: Routes = [
   {
@@ -47,13 +45,13 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: UserDashboardComponent },
       { 
-        path: 'PROILE', 
+        path: 'profile', 
         component: UserProfileComponent,
         children: [
           { path: '', redirectTo: 'body', pathMatch: 'full' },
-          { path: 'body', component:BodyComponent },
-          { path: 'interests', component:InterestsComponent  },
-          { path: 'styles',component:StylesMeComponent},
+          { path: 'body', component: BodyComponent },
+          { path: 'interests', component: InterestsComponent },
+          { path: 'styles', component: StylesMeComponent },
           { path: 'settings', component: UserSettingsComponent }
         ]
       },
@@ -84,6 +82,7 @@ const routes: Routes = [
     CommonModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
+    // Standalone Components
     AllStyleComponent,
     InterestsComponent,
     StylesMeComponent,
