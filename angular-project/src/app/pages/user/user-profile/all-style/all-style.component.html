@@ -1,0 +1,140 @@
+<div class="container mx-auto px-4 py-8">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-right mb-4">استایل‌ها</h1>
+    <p class="text-gray-600 text-right mb-6">کشف و بررسی استایل‌های مختلف مد و فشن</p>
+    
+    <!-- Search and Filter -->
+    <div class="flex flex-col md:flex-row gap-4 mb-6">
+      <div class="flex-1">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange()"
+          placeholder="جستجو در استایل‌ها..."
+          class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors"
+        />
+      </div>
+      <div class="flex gap-2">
+        <button
+          (click)="onCategoryChange('all')"
+          [class.bg-pink-500]="selectedCategory === 'all'"
+          [class.text-white]="selectedCategory === 'all'"
+          class="px-4 py-2 rounded-xl border border-pink-500 text-pink-500 hover:bg-pink-50 transition-colors"
+        >
+          همه
+        </button>
+        <button
+          (click)="onCategoryChange('trend')"
+          [class.bg-pink-500]="selectedCategory === 'trend'"
+          [class.text-white]="selectedCategory === 'trend'"
+          class="px-4 py-2 rounded-xl border border-pink-500 text-pink-500 hover:bg-pink-50 transition-colors"
+        >
+          ترند
+        </button>
+        <button
+          (click)="onCategoryChange('classic')"
+          [class.bg-pink-500]="selectedCategory === 'classic'"
+          [class.text-white]="selectedCategory === 'classic'"
+          class="px-4 py-2 rounded-xl border border-pink-500 text-pink-500 hover:bg-pink-50 transition-colors"
+        >
+          کلاسیک
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="flex justify-center items-center min-h-[400px]">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500"></div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="text-center py-12">
+    <p class="text-red-500 text-lg">{{ error }}</p>
+  </div>
+
+  <!-- Styles Grid -->
+  <div *ngIf="!loading && !error" class="space-y-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div *ngFor="let style of styles" class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+        <!-- Style Image -->
+        <div class="relative h-48">
+          <img
+            [src]="'assets/images/styles/' + style.gallery[0]"
+            [alt]="style.name"
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute top-4 right-4">
+            <span
+              [class.bg-pink-500]="style.trendStatus === 'trend'"
+              [class.bg-gray-500]="style.trendStatus === 'classic'"
+              class="px-3 py-1 rounded-full text-white text-sm"
+            >
+              {{ style.trendStatus === 'trend' ? 'ترند' : 'کلاسیک' }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Style Content -->
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-right mb-2">{{ style.name }}</h3>
+          <p class="text-gray-600 text-right mb-4">{{ style.shortDescription }}</p>
+          
+          <!-- Key Features -->
+          <div class="mb-4">
+            <h4 class="text-sm font-semibold text-gray-700 text-right mb-2">ویژگی‌های کلیدی:</h4>
+            <div class="flex flex-wrap gap-2 justify-end">
+              <span
+                *ngFor="let feature of style.keyFeatures"
+                class="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700"
+              >
+                {{ feature }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Color Palette -->
+          <div class="mb-4">
+            <h4 class="text-sm font-semibold text-gray-700 text-right mb-2">پالت رنگی:</h4>
+            <div class="flex gap-2 justify-end">
+              <div
+                *ngFor="let color of style.colorPalette"
+                class="w-6 h-6 rounded-full border border-gray-200"
+                [style.background-color]="color"
+              ></div>
+            </div>
+          </div>
+
+          <!-- View Details Button -->
+          <div class="flex justify-end">
+            <a
+              [routerLink]="['/user/style', style.id]"
+              class="px-4 py-2 bg-pink-500 text-white rounded-xl hover:bg-pink-600 transition-colors"
+            >
+              مشاهده جزئیات
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="totalPages > 1" class="flex justify-center gap-2 mt-8">
+      <button
+        *ngFor="let page of pages"
+        (click)="onPageChange(page)"
+        [class.bg-pink-500]="currentPage === page"
+        [class.text-white]="currentPage === page"
+        class="w-10 h-10 flex items-center justify-center rounded-xl border border-pink-500 text-pink-500 hover:bg-pink-50 transition-colors"
+      >
+        {{ page }}
+      </button>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="styles.length === 0" class="text-center py-12">
+      <p class="text-gray-500 text-lg">هیچ استایلی یافت نشد.</p>
+    </div>
+  </div>
+</div> 

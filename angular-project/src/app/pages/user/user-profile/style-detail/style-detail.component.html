@@ -1,0 +1,194 @@
+<div class="container mx-auto px-4 py-8">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="flex justify-center items-center min-h-[400px]">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500"></div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="text-center py-12">
+    <p class="text-red-500 text-lg">{{ error }}</p>
+    <button
+      routerLink="/user/style"
+      class="mt-4 px-6 py-2 bg-pink-500 text-white rounded-xl hover:bg-pink-600 transition-colors"
+    >
+      بازگشت به لیست استایل‌ها
+    </button>
+  </div>
+
+  <!-- Style Details -->
+  <div *ngIf="style && !loading" class="space-y-8">
+    <!-- Header -->
+    <div class="flex justify-between items-start">
+      <button
+        routerLink="/user/style"
+        class="px-4 py-2 text-gray-600 hover:text-pink-500 transition-colors flex items-center gap-2"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+        </svg>
+        بازگشت
+      </button>
+      <div class="text-right">
+        <h1 class="text-3xl font-bold mb-2">{{ style.name }}</h1>
+        <p class="text-gray-600">{{ style.shortDescription }}</p>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Left Column: Basic Info -->
+      <div class="lg:col-span-2 space-y-8">
+        <!-- Historical Root -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <h2 class="text-xl font-semibold mb-4 text-right">ریشه تاریخی</h2>
+          <p class="text-gray-600 text-right">{{ style.historicalRoot }}</p>
+        </div>
+
+        <!-- Key Features -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <h2 class="text-xl font-semibold mb-4 text-right">ویژگی‌های کلیدی</h2>
+          <div class="flex flex-wrap gap-2 justify-end">
+            <span
+              *ngFor="let feature of style.keyFeatures"
+              class="px-4 py-2 bg-gray-100 rounded-xl text-gray-700"
+            >
+              {{ feature }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Symbols and Elements -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <h2 class="text-xl font-semibold mb-4 text-right">نمادها و المان‌های مشخصه</h2>
+          <div class="flex flex-wrap gap-2 justify-end">
+            <span
+              *ngFor="let symbol of style.symbols"
+              class="px-4 py-2 bg-pink-50 text-pink-700 rounded-xl"
+            >
+              {{ symbol }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Philosophy -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <h2 class="text-xl font-semibold mb-4 text-right">فلسفه استایل</h2>
+          <p class="text-gray-600 text-right">{{ style.philosophy }}</p>
+        </div>
+      </div>
+
+      <!-- Right Column: Additional Info -->
+      <div class="space-y-8">
+        <!-- Mood and Personality -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <h2 class="text-xl font-semibold mb-4 text-right">حس و حال</h2>
+          <p class="text-gray-600 text-right mb-6">{{ style.mood }}</p>
+          <h3 class="text-lg font-medium mb-2 text-right">شخصیت الهام‌بخش</h3>
+          <p class="text-gray-600 text-right">{{ style.iconPersonality }}</p>
+        </div>
+
+        <!-- Color Palette -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <h2 class="text-xl font-semibold mb-4 text-right">پالت رنگی</h2>
+          <div class="flex flex-wrap gap-2 justify-end">
+            <div
+              *ngFor="let color of style.colorPalette"
+              class="w-8 h-8 rounded-full border border-gray-200"
+              [style.background-color]="color"
+              [title]="color"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Common Fabrics -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <h2 class="text-xl font-semibold mb-4 text-right">پارچه‌های رایج</h2>
+          <div class="flex flex-wrap gap-2 justify-end">
+            <span
+              *ngFor="let fabric of style.commonFabrics"
+              class="px-4 py-2 bg-gray-100 rounded-xl text-gray-700"
+            >
+              {{ fabric }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Common Accessories -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <h2 class="text-xl font-semibold mb-4 text-right">اکسسوری‌های رایج</h2>
+          <div class="flex flex-wrap gap-2 justify-end">
+            <span
+              *ngFor="let accessory of style.commonAccessories"
+              class="px-4 py-2 bg-gray-100 rounded-xl text-gray-700"
+            >
+              {{ accessory }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Styles -->
+    <div *ngIf="relatedStyles.length > 0" class="bg-white rounded-xl shadow-lg p-6">
+      <h2 class="text-xl font-semibold mb-4 text-right">استایل‌های مرتبط</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div
+          *ngFor="let relatedStyle of relatedStyles"
+          class="bg-gray-50 rounded-xl p-4 hover:shadow-md transition-shadow cursor-pointer"
+          [routerLink]="['/user/style', relatedStyle.id]"
+        >
+          <h3 class="font-medium text-right mb-2">{{ relatedStyle.name }}</h3>
+          <p class="text-gray-600 text-right text-sm">{{ relatedStyle.shortDescription }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Style Relationships -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Parent Styles -->
+      <div *ngIf="parentStyles.length > 0" class="bg-white rounded-xl shadow-lg p-6">
+        <h2 class="text-xl font-semibold mb-4 text-right">استایل‌های والد</h2>
+        <div class="space-y-4">
+          <div
+            *ngFor="let parentStyle of parentStyles"
+            class="bg-gray-50 rounded-xl p-4 hover:shadow-md transition-shadow cursor-pointer"
+            [routerLink]="['/user/style', parentStyle.id]"
+          >
+            <h3 class="font-medium text-right mb-2">{{ parentStyle.name }}</h3>
+            <p class="text-gray-600 text-right text-sm">{{ parentStyle.shortDescription }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Child Styles -->
+      <div *ngIf="childStyles.length > 0" class="bg-white rounded-xl shadow-lg p-6">
+        <h2 class="text-xl font-semibold mb-4 text-right">استایل‌های فرزند</h2>
+        <div class="space-y-4">
+          <div
+            *ngFor="let childStyle of childStyles"
+            class="bg-gray-50 rounded-xl p-4 hover:shadow-md transition-shadow cursor-pointer"
+            [routerLink]="['/user/style', childStyle.id]"
+          >
+            <h3 class="font-medium text-right mb-2">{{ childStyle.name }}</h3>
+            <p class="text-gray-600 text-right text-sm">{{ childStyle.shortDescription }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hybrid Styles -->
+    <div *ngIf="hybridStyles.length > 0" class="bg-white rounded-xl shadow-lg p-6">
+      <h2 class="text-xl font-semibold mb-4 text-right">استایل‌های هیبرید</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div
+          *ngFor="let hybridStyle of hybridStyles"
+          class="bg-gray-50 rounded-xl p-4 hover:shadow-md transition-shadow cursor-pointer"
+          [routerLink]="['/user/style', hybridStyle.id]"
+        >
+          <h3 class="font-medium text-right mb-2">{{ hybridStyle.name }}</h3>
+          <p class="text-gray-600 text-right text-sm">{{ hybridStyle.shortDescription }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

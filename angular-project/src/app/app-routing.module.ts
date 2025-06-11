@@ -8,15 +8,10 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { 
-    path: 'user', 
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule)
-  },
-  { 
-    path: 'admin', 
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule)
+  {
+    path: 'user',
+    loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule),
+    canActivate: [AuthGuard]
   }
 ];
 
