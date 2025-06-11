@@ -33,6 +33,7 @@ import { UserDiscoverComponent } from './user-discover/user-discover.component';
 import { InterestsComponent } from './user-profile/user-profile-interests/interests/interests.component';
 import { StylesMeComponent } from './user-profile/user-profile-styles/styles-me/styles-me.component';
 import { BodyComponent } from './user-profile/body/body.component';
+import { AllStyleComponent } from './all-style/all-style.component';
 
 
 const routes: Routes = [
@@ -55,7 +56,7 @@ const routes: Routes = [
       },
       { path: 'collection', component: UserCollectionComponent },
       { path: 'saved', component: UserSavedComponent },
-      { path: 'style', component: UserStyleComponent },
+      { path: 'style', component: AllStyleComponent },
       { path: 'discover', component: UserDiscoverComponent }
     ]
   }
