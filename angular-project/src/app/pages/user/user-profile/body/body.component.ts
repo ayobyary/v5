@@ -50,8 +50,168 @@ export class BodyComponent implements OnInit {
 
   bodyForm: FormGroup;
   showInfo = false;
+  showTestMenu = false;
   savedMeasurements: BodyMeasurement[] = [];
   bodyProportions: BodyProportion[] = [];
+
+  // نمونه‌های تست
+  private testSamples = {
+    hourglass: [
+      { id: 'height', value: 165 },
+      { id: 'weight', value: 55 },
+      { id: 'neck', value: 35 },
+      { id: 'shoulder', value: 40 },
+      { id: 'shoulderWidth', value: 40 },
+      { id: 'shoulderLength', value: 12 },
+      { id: 'highBust', value: 85 },
+      { id: 'chest', value: 90 },
+      { id: 'fullChest', value: 95 },
+      { id: 'underbust', value: 75 },
+      { id: 'armhole', value: 45 },
+      { id: 'backWidth', value: 35 },
+      { id: 'upperBackWidth', value: 30 },
+      { id: 'waist', value: 65 },
+      { id: 'waistHeight', value: 105 },
+      { id: 'waistToHipLength', value: 20 },
+      { id: 'hip', value: 90 },
+      { id: 'armLength', value: 58 },
+      { id: 'bicep', value: 28 },
+      { id: 'forearm', value: 25 },
+      { id: 'upperArm', value: 30 },
+      { id: 'wrist', value: 15 },
+      { id: 'inseam', value: 75 },
+      { id: 'thigh', value: 55 },
+      { id: 'knee', value: 38 },
+      { id: 'calf', value: 35 },
+      { id: 'ankle', value: 22 },
+      { id: 'torsoFront', value: 60 },
+      { id: 'torsoBack', value: 62 }
+    ],
+    pear: [
+      { id: 'height', value: 160 },
+      { id: 'weight', value: 58 },
+      { id: 'neck', value: 34 },
+      { id: 'shoulder', value: 38 },
+      { id: 'shoulderWidth', value: 38 },
+      { id: 'shoulderLength', value: 11 },
+      { id: 'highBust', value: 82 },
+      { id: 'chest', value: 85 },
+      { id: 'fullChest', value: 90 },
+      { id: 'underbust', value: 73 },
+      { id: 'armhole', value: 44 },
+      { id: 'backWidth', value: 34 },
+      { id: 'upperBackWidth', value: 29 },
+      { id: 'waist', value: 70 },
+      { id: 'waistHeight', value: 100 },
+      { id: 'waistToHipLength', value: 22 },
+      { id: 'hip', value: 95 },
+      { id: 'armLength', value: 56 },
+      { id: 'bicep', value: 27 },
+      { id: 'forearm', value: 24 },
+      { id: 'upperArm', value: 29 },
+      { id: 'wrist', value: 15 },
+      { id: 'inseam', value: 73 },
+      { id: 'thigh', value: 58 },
+      { id: 'knee', value: 39 },
+      { id: 'calf', value: 36 },
+      { id: 'ankle', value: 21 },
+      { id: 'torsoFront', value: 58 },
+      { id: 'torsoBack', value: 60 }
+    ],
+    apple: [
+      { id: 'height', value: 162 },
+      { id: 'weight', value: 65 },
+      { id: 'neck', value: 36 },
+      { id: 'shoulder', value: 42 },
+      { id: 'shoulderWidth', value: 42 },
+      { id: 'shoulderLength', value: 13 },
+      { id: 'highBust', value: 90 },
+      { id: 'chest', value: 95 },
+      { id: 'fullChest', value: 100 },
+      { id: 'underbust', value: 80 },
+      { id: 'armhole', value: 46 },
+      { id: 'backWidth', value: 36 },
+      { id: 'upperBackWidth', value: 32 },
+      { id: 'waist', value: 85 },
+      { id: 'waistHeight', value: 102 },
+      { id: 'waistToHipLength', value: 18 },
+      { id: 'hip', value: 90 },
+      { id: 'armLength', value: 57 },
+      { id: 'bicep', value: 29 },
+      { id: 'forearm', value: 26 },
+      { id: 'upperArm', value: 31 },
+      { id: 'wrist', value: 16 },
+      { id: 'inseam', value: 74 },
+      { id: 'thigh', value: 56 },
+      { id: 'knee', value: 40 },
+      { id: 'calf', value: 37 },
+      { id: 'ankle', value: 23 },
+      { id: 'torsoFront', value: 62 },
+      { id: 'torsoBack', value: 64 }
+    ],
+    rectangle: [
+      { id: 'height', value: 168 },
+      { id: 'weight', value: 52 },
+      { id: 'neck', value: 34 },
+      { id: 'shoulder', value: 39 },
+      { id: 'shoulderWidth', value: 39 },
+      { id: 'shoulderLength', value: 12 },
+      { id: 'highBust', value: 83 },
+      { id: 'chest', value: 85 },
+      { id: 'fullChest', value: 90 },
+      { id: 'underbust', value: 74 },
+      { id: 'armhole', value: 45 },
+      { id: 'backWidth', value: 35 },
+      { id: 'upperBackWidth', value: 30 },
+      { id: 'waist', value: 75 },
+      { id: 'waistHeight', value: 108 },
+      { id: 'waistToHipLength', value: 20 },
+      { id: 'hip', value: 85 },
+      { id: 'armLength', value: 59 },
+      { id: 'bicep', value: 27 },
+      { id: 'forearm', value: 25 },
+      { id: 'upperArm', value: 29 },
+      { id: 'wrist', value: 15 },
+      { id: 'inseam', value: 76 },
+      { id: 'thigh', value: 52 },
+      { id: 'knee', value: 37 },
+      { id: 'calf', value: 34 },
+      { id: 'ankle', value: 21 },
+      { id: 'torsoFront', value: 61 },
+      { id: 'torsoBack', value: 63 }
+    ],
+    invertedTriangle: [
+      { id: 'height', value: 170 },
+      { id: 'weight', value: 60 },
+      { id: 'neck', value: 37 },
+      { id: 'shoulder', value: 45 },
+      { id: 'shoulderWidth', value: 45 },
+      { id: 'shoulderLength', value: 14 },
+      { id: 'highBust', value: 90 },
+      { id: 'chest', value: 95 },
+      { id: 'fullChest', value: 100 },
+      { id: 'underbust', value: 80 },
+      { id: 'armhole', value: 47 },
+      { id: 'backWidth', value: 38 },
+      { id: 'upperBackWidth', value: 33 },
+      { id: 'waist', value: 75 },
+      { id: 'waistHeight', value: 110 },
+      { id: 'waistToHipLength', value: 19 },
+      { id: 'hip', value: 85 },
+      { id: 'armLength', value: 60 },
+      { id: 'bicep', value: 30 },
+      { id: 'forearm', value: 26 },
+      { id: 'upperArm', value: 32 },
+      { id: 'wrist', value: 16 },
+      { id: 'inseam', value: 77 },
+      { id: 'thigh', value: 53 },
+      { id: 'knee', value: 38 },
+      { id: 'calf', value: 35 },
+      { id: 'ankle', value: 22 },
+      { id: 'torsoFront', value: 63 },
+      { id: 'torsoBack', value: 65 }
+    ]
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -94,5 +254,13 @@ export class BodyComponent implements OnInit {
 
   getProportionAnalysis(proportion: BodyProportion): string {
     return this.bodyProportionsService.getProportionAnalysis(proportion);
+  }
+
+  // متد برای اعمال نمونه تست
+  applyTestSample(sampleType: 'hourglass' | 'pear' | 'apple' | 'rectangle' | 'invertedTriangle'): void {
+    const sample = this.testSamples[sampleType];
+    sample.forEach(measurement => {
+      this.bodyForm.get(measurement.id)?.setValue(measurement.value);
+    });
   }
 }
