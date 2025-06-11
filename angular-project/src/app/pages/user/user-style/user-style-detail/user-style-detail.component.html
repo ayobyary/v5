@@ -1,0 +1,152 @@
+<div class="style-detail-container" *ngIf="!loading && !error && style">
+  <!-- Header Section -->
+  <div class="style-header">
+    <div class="style-image">
+      <img [src]="style.main_image" [alt]="style.name">
+    </div>
+    <div class="style-info">
+      <h1>{{ style.name }}</h1>
+      <p class="description">{{ style.short_description }}</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="style-content">
+    <!-- Psychological Profile -->
+    <section *ngIf="style.psychological_profile">
+      <h2>پروفایل روانشناختی</h2>
+      <p>{{ style.psychological_profile.description }}</p>
+    </section>
+
+    <!-- Color Palette -->
+    <section *ngIf="style.color_palette">
+      <h2>پالت رنگی</h2>
+      <div class="color-palette">
+        <div class="color" *ngFor="let color of style.color_palette.colors.split(',')" 
+             [style.background-color]="color">
+        </div>
+      </div>
+    </section>
+
+    <!-- Brands -->
+    <section *ngIf="style.brands && style.brands.length > 0">
+      <h2>برندها</h2>
+      <div class="brands-list">
+        <div class="brand" *ngFor="let brand of style.brands">
+          {{ brand.name }}
+        </div>
+      </div>
+    </section>
+
+    <!-- Accessories -->
+    <section *ngIf="style.accessories && style.accessories.length > 0">
+      <h2>اکسسوری‌ها</h2>
+      <div class="accessories-grid">
+        <div class="accessory" *ngFor="let accessory of style.accessories">
+          <img [src]="accessory.image_url" [alt]="accessory.name">
+          <p>{{ accessory.name }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Events -->
+    <section *ngIf="style.events && style.events.length > 0">
+      <h2>مناسبت‌ها</h2>
+      <div class="events-list">
+        <div class="event" *ngFor="let event of style.events">
+          <h3>{{ event.name }}</h3>
+          <p>{{ event.description }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Locations -->
+    <section *ngIf="style.locations && style.locations.length > 0">
+      <h2>مکان‌ها</h2>
+      <div class="locations-list">
+        <div class="location" *ngFor="let location of style.locations">
+          {{ location.name }}
+        </div>
+      </div>
+    </section>
+
+    <!-- Fabrics -->
+    <section *ngIf="style.fabrics && style.fabrics.length > 0">
+      <h2>پارچه‌ها</h2>
+      <div class="fabrics-list">
+        <div class="fabric" *ngFor="let fabric of style.fabrics">
+          {{ fabric.name }}
+        </div>
+      </div>
+    </section>
+
+    <!-- Hair and Makeup -->
+    <section *ngIf="style.hair_and_makeup">
+      <h2>آرایش و مو</h2>
+      <p>{{ style.hair_and_makeup.description }}</p>
+    </section>
+
+    <!-- Trend Status -->
+    <section *ngIf="style.trend_status">
+      <h2>وضعیت ترند</h2>
+      <p>{{ style.trend_status.status }}</p>
+    </section>
+
+    <!-- Historical Evolution -->
+    <section *ngIf="style.historical_evolution">
+      <h2>تکامل تاریخی</h2>
+      <p>{{ style.historical_evolution.description }}</p>
+    </section>
+
+    <!-- Usage Today -->
+    <section *ngIf="style.usage_today">
+      <h2>کاربرد امروزی</h2>
+      <p>{{ style.usage_today.description }}</p>
+    </section>
+
+    <!-- Related Styles -->
+    <section *ngIf="style.related_styles && style.related_styles.length > 0">
+      <h2>استایل‌های مرتبط</h2>
+      <div class="related-styles-list">
+        <div class="related-style" *ngFor="let relatedStyle of style.related_styles">
+          {{ relatedStyle.name }}
+        </div>
+      </div>
+    </section>
+
+    <!-- Contrasting Styles -->
+    <section *ngIf="style.contrasting_styles && style.contrasting_styles.length > 0">
+      <h2>استایل‌های متضاد</h2>
+      <div class="contrasting-styles-list">
+        <div class="contrasting-style" *ngFor="let contrastingStyle of style.contrasting_styles">
+          {{ contrastingStyle.name }}
+        </div>
+      </div>
+    </section>
+
+    <!-- Age Groups -->
+    <section *ngIf="style.age_groups && style.age_groups.length > 0">
+      <h2>گروه‌های سنی</h2>
+      <div class="age-groups-list">
+        <div class="age-group" *ngFor="let ageGroup of style.age_groups">
+          {{ ageGroup.description }}
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- Loading State -->
+<div class="loading-container" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+  <p>در حال بارگذاری...</p>
+</div>
+
+<!-- Error State -->
+<div class="error-container" *ngIf="error">
+  <mat-icon>error_outline</mat-icon>
+  <p>خطا در بارگذاری اطلاعات</p>
+  <button mat-raised-button color="primary" (click)="loadStyleDetails(styleId)">
+    تلاش مجدد
+  </button>
+</div> 

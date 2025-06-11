@@ -1,7 +1,60 @@
 export interface Style {
   id: number;
   name: string;                    // نام استایل
-  shortDescription: string;        // توصیف کوتاه
+  short_description: string;        // توصیف کوتاه
+  main_image: string;
+  psychological_profile?: {
+    description: string;
+  };
+  color_palette?: {
+    colors: string;
+  };
+  brands?: Array<{
+    id: number;
+    name: string;
+  }>;
+  accessories?: Array<{
+    id: number;
+    name: string;
+    image_url: string;
+  }>;
+  events?: Array<{
+    id: number;
+    name: string;
+    description: string;
+  }>;
+  locations?: Array<{
+    id: number;
+    name: string;
+  }>;
+  fabrics?: Array<{
+    id: number;
+    name: string;
+  }>;
+  hair_and_makeup?: {
+    description: string;
+  };
+  trend_status?: {
+    status: string;
+  };
+  historical_evolution?: {
+    description: string;
+  };
+  usage_today?: {
+    description: string;
+  };
+  related_styles?: Array<{
+    id: number;
+    name: string;
+  }>;
+  contrasting_styles?: Array<{
+    id: number;
+    name: string;
+  }>;
+  age_groups?: Array<{
+    id: number;
+    description: string;
+  }>;
   historicalRoot: string;          // ریشه تاریخی
   keyFeatures: string[];           // ویژگی‌های کلیدی
   symbols: string[];               // نمادها و المان‌های مشخصه
@@ -16,11 +69,9 @@ export interface Style {
   commonFabrics: string[];         // جنس پارچه‌های رایج
   colorPalette: string[];          // پالت رنگی رایج
   commonOutfits: string[];         // ترکیب‌های رایج لباس
-  psychologicalProfile: string;    // پروفایل روان‌شناختی
   culturalPosition: string;        // موقعیت فرهنگی/اجتماعی
   commonMakeup: string;            // آرایش و مدل موهای رایج
   geographicalOrigin: string;      // موقعیت جغرافیایی
-  historicalEvolution: string;     // تحولات تاریخی
   controversies: string;           // نگاه منتقدانه
   hybridStyles: string[];          // ترکیب با استایل‌های دیگر
   commonLocations: string[];       // لوکیشن‌های معمول

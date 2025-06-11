@@ -17,6 +17,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 // Components
 import { UserLayoutComponent } from './user-layout/user-layout.component';
@@ -29,6 +31,7 @@ import { UserCollectionComponent } from './user-collection/user-collection.compo
 import { UserSavedComponent } from './user-saved/user-saved.component';
 import { UserStyleComponent } from './user-style/user-style.component';
 import { UserDiscoverComponent } from './user-discover/user-discover.component';
+import { UserStyleDetailComponent } from './user-style/user-style-detail/user-style-detail.component';
 import { AllStyleComponent } from './all-style/all-style.component';
 
 import { InterestsComponent } from './user-profile/user-profile-interests/interests/interests.component';
@@ -56,7 +59,8 @@ const routes: Routes = [
       },
       { path: 'collection', component: UserCollectionComponent },
       { path: 'saved', component: UserSavedComponent },
-      { path: 'style', component: AllStyleComponent },
+      { path: 'style', component: UserStyleComponent },
+      { path: 'style/:id', component: UserStyleDetailComponent },
       { path: 'discover', component: UserDiscoverComponent }
     ]
   }
@@ -73,7 +77,8 @@ const routes: Routes = [
     UserCollectionComponent,
     UserSavedComponent,
     UserStyleComponent,
-    UserDiscoverComponent
+    UserDiscoverComponent,
+    UserStyleDetailComponent
   ],
   imports: [
     CommonModule,
@@ -96,7 +101,13 @@ const routes: Routes = [
     MatSidenavModule,
     MatToolbarModule,
     MatDividerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule
+  ],
+  exports: [
+    UserStyleComponent,
+    UserStyleDetailComponent
   ]
 })
 export class UserModule { } 

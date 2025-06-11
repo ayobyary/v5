@@ -1,4 +1,37 @@
-<div class="style-container">
-  <h2>استایل من</h2>
-  <!-- محتوای استایل‌ها -->
+<div class="styles-container">
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+    <p>در حال بارگذاری...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-container" *ngIf="error">
+    <mat-icon>error_outline</mat-icon>
+    <p>خطا در بارگذاری اطلاعات</p>
+    <button mat-raised-button color="primary" (click)="loadStyles()">
+      تلاش مجدد
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div class="styles-grid" *ngIf="!loading && !error">
+    <mat-card class="style-card" *ngFor="let style of styles" [routerLink]="['/user/style', style.id]">
+      <img mat-card-image [src]="style.main_image" [alt]="style.name">
+      <mat-card-content>
+        <h2>{{ style.name }}</h2>
+        <p>{{ style.short_description }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Pagination -->
+  <mat-paginator
+    *ngIf="!loading && !error"
+    [length]="total"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="onPageChange($event)"
+    aria-label="Select page">
+  </mat-paginator>
 </div> 
