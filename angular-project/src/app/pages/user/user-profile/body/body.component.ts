@@ -53,6 +53,8 @@ export class BodyComponent implements OnInit {
   showTestMenu = false;
   savedMeasurements: BodyMeasurement[] = [];
   bodyProportions: BodyProportion[] = [];
+  activeTab: 'analysis' | 'measurements' | 'proportions' = 'analysis';
+  activeSection: 'analysis' | 'measurements' | 'proportions' | null = null;
 
   // نمونه‌های تست
   private testSamples = {
@@ -262,5 +264,15 @@ export class BodyComponent implements OnInit {
     sample.forEach(measurement => {
       this.bodyForm.get(measurement.id)?.setValue(measurement.value);
     });
+  }
+
+  toggleSection(section: 'analysis' | 'measurements' | 'proportions') {
+    this.activeSection = this.activeSection === section ? null : section;
+  }
+
+  onSubmit() {
+    if (this.bodyForm.valid) {
+      this.saveMeasurements();
+    }
   }
 }
