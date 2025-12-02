@@ -109,4 +109,45 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
   goToImage(idx: number) {
     this.currentImageIndex = idx;
   }
+
+  navigateToCollection() {
+    this.snackBar.open('📦 بخش Collection به زودی اضافه می‌شود', 'بستن', {
+      duration: 2000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['info-snackbar']
+    });
+  }
+
+  navigateToHome() {
+    // در همان صفحه هستیم، فقط به بالای صفحه اسکرول می‌کنیم
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  navigateToSaved() {
+    this.snackBar.open('💾 بخش Saved به زودی اضافه می‌شود', 'بستن', {
+      duration: 2000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['info-snackbar']
+    });
+  }
+
+  navigateToStyle() {
+    this.snackBar.open('👔 بخش Your Style به زودی اضافه می‌شود', 'بستن', {
+      duration: 2000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['info-snackbar']
+    });
+  }
+
+  navigateToDiscover() {
+    this.snackBar.open('🔍 بخش Discover به زودی اضافه می‌شود', 'بستن', {
+      duration: 2000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['info-snackbar']
+    });
+  }
 } 

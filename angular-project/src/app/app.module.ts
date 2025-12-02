@@ -15,15 +15,15 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './pages/login/login.component';
+import { LoginModule } from './pages/login/login.module';
 import { RegisterModule } from './pages/register/register.module';
 import { SignupModule } from './pages/signup/signup.module';
+import { ForgotPasswordModule } from './pages/forgot-password/forgot-password.module';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -39,8 +39,10 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     MatCheckboxModule,
     MatProgressSpinnerModule,
     MatMenuModule,
+    LoginModule,
     RegisterModule,
-    SignupModule
+    SignupModule,
+    ForgotPasswordModule
   ],
   providers: [
     {

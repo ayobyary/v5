@@ -6,17 +6,17 @@
         PUREM <span class="ml-1 text-xs font-normal text-gray-500">ODA</span>
       </div>
       <nav class="hidden md:flex gap-8 text-sm font-medium">
-        <a href="/user/BBBBB" class="hover:text-black text-gray-700">CALECTION</a>
-        <a href="#" class="hover:text-black text-gray-700">HOME</a>
-        <a href="#" class="hover:text-black text-gray-700">SAVED</a>
-        <a href="#" class="hover:text-red-600 text-red-500">YOUR STYLE</a>
-        <a href="#" class="hover:text-black text-gray-700">DISCOVER</a>
+        <button type="button" (click)="navigateToCollection()" class="hover:text-black text-gray-700 bg-transparent border-none cursor-pointer">CALECTION</button>
+        <button type="button" (click)="navigateToHome()" class="hover:text-black text-gray-700 bg-transparent border-none cursor-pointer">HOME</button>
+        <button type="button" (click)="navigateToSaved()" class="hover:text-black text-gray-700 bg-transparent border-none cursor-pointer">SAVED</button>
+        <button type="button" (click)="navigateToStyle()" class="hover:text-red-600 text-red-500 bg-transparent border-none cursor-pointer">YOUR STYLE</button>
+        <button type="button" (click)="navigateToDiscover()" class="hover:text-black text-gray-700 bg-transparent border-none cursor-pointer">DISCOVER</button>
       </nav>
       <div class="flex items-center gap-4">
-        <button class="text-gray-500 hover:text-black"><span class="material-icons">search</span></button>
-        <button class="text-gray-500 hover:text-black"><span class="material-icons">favorite_border</span></button>
-        <button class="text-gray-500 hover:text-black"><span class="material-icons">shopping_bag</span></button>
-        <button (click)="logout()" class="text-gray-500 hover:text-black" title="Logout"><span class="material-icons">logout</span></button>
+        <button type="button" class="text-gray-500 hover:text-black"><span class="material-icons">search</span></button>
+        <button type="button" class="text-gray-500 hover:text-black"><span class="material-icons">favorite_border</span></button>
+        <button type="button" class="text-gray-500 hover:text-black"><span class="material-icons">shopping_bag</span></button>
+        <button type="button" (click)="logout()" class="text-gray-500 hover:text-black" title="Logout"><span class="material-icons">logout</span></button>
       </div>
     </header>
 
@@ -71,26 +71,32 @@
           class="object-cover w-full h-full transition-all duration-700" />
         
         <!-- دکمه‌های اسلایدشو -->
-        <button (click)="prevImage()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-70 hover:bg-opacity-100 rounded-full p-2 shadow">
+        <button type="button" (click)="prevImage()" title="Previous image" aria-label="Previous image" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-70 hover:bg-opacity-100 rounded-full p-2 shadow">
           <span class="material-icons">chevron_left</span>
         </button>
-        <button (click)="nextImage()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-70 hover:bg-opacity-100 rounded-full p-2 shadow">
+        <button type="button" (click)="nextImage()" title="Next image" aria-label="Next image" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-70 hover:bg-opacity-100 rounded-full p-2 shadow">
           <span class="material-icons">chevron_right</span>
         </button>
 
         <!-- دکمه‌های اصلی داشبورد -->
         <button
+          type="button"
+          (click)="shopNow()"
           class="absolute top-4 right-4 bg-white text-black px-3 py-1.5 md:px-6 md:py-2 rounded-full font-semibold shadow hover:bg-black hover:text-white transition text-xs md:text-base"
         >
           SHOP NOW
         </button>
         <div class="absolute bottom-8 left-8 flex gap-4">
           <button
+            type="button"
+            (click)="learnMore()"
             class="bg-white text-black px-3 py-1.5 md:px-6 md:py-2 rounded-full font-semibold shadow hover:bg-black hover:text-white transition text-xs md:text-base"
           >
             LEARN MORE
           </button>
           <button
+            type="button"
+            (click)="contactUs()"
             class="bg-white text-black px-3 py-1.5 md:px-6 md:py-2 rounded-full font-semibold shadow hover:bg-black hover:text-white transition text-xs md:text-base"
           >
             CONTACT US
@@ -99,11 +105,15 @@
 
         <!-- نقاط اسلایدشو -->
         <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-          <button *ngFor="let img of mainImages; let i = index"
+          <button type="button" *ngFor="let img of mainImages; let i = index"
                   (click)="goToImage(i)"
                   [class.bg-black]="i === currentImageIndex"
                   class="w-3 h-3 rounded-full bg-white border border-black transition-all"
-                  [style.opacity]="i === currentImageIndex ? 1 : 0.5"></button>
+                  [style.opacity]="i === currentImageIndex ? 1 : 0.5"
+                  [title]="'Go to slide ' + (i + 1)"
+                  [attr.aria-label]="'Go to slide ' + (i + 1)">
+            <span class="sr-only">Go to slide {{ i + 1 }}</span>
+          </button>
         </div>
       </div>
       <!-- Left: Text + Cards -->
