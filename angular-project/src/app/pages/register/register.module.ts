@@ -24,6 +24,7 @@ import { RegisterComponent } from './register.component';
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule
-  ]
+  ],
+  exports: [RegisterComponent]
 })
 export class RegisterModule { } 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -24,12 +25,16 @@ export class RegisterComponent {
       phone: ['', [Validators.required, Validators.pattern(/^\d{10,15}$/)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
-    }, { validator: this.passwordMatchValidator });
+    }, { validators: this.passwordMatchValidator });
   }
 
-  passwordMatchValidator(form: FormGroup) {
-    return form.get('password')!.value === form.get('confirmPassword')!.value
-      ? null : { mismatch: true };
+  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password');
+    const confirmPassword = control.get('confirmPassword');
+    if (password && confirmPassword && password.value !== confirmPassword.value) {
+      return { mismatch: true };
+    }
+    return null;
   }
 
   async onSubmit() {
@@ -39,7 +44,7 @@ export class RegisterComponent {
       this.successMessage = '';
       const { email, phone, password } = this.registerForm.value;
       try {
-        await this.authService.register({ email, password, role: 'user', phone }).toPromise();
+        await firstValueFrom(this.authService.register({ email, password, role: 'user', phone }));
         this.successMessage = 'Registration successful! You can now log in.';
         setTimeout(() => this.router.navigate(['/login']), 1500);
       } catch (error: any) {

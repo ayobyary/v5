@@ -57,6 +57,7 @@
         <div class="space-y-4 mt-6">
           <button type="submit" 
                   [disabled]="signupForm.invalid || isLoading"
+                  
                   class="w-full py-3 px-4 bg-pink-500 hover:bg-pink-600 text-white rounded-xl transition-colors flex items-center justify-center">
             <mat-spinner *ngIf="isLoading" [diameter]="24" class="mr-2"></mat-spinner>
             <span>{{isLoading ? 'Creating Account...' : 'Sign up'}}</span>

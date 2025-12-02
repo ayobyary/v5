@@ -16,6 +16,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
+import { RegisterModule } from './pages/register/register.module';
+import { SignupModule } from './pages/signup/signup.module';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
@@ -36,7 +38,9 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     MatIconModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
-    MatMenuModule
+    MatMenuModule,
+    RegisterModule,
+    SignupModule
   ],
   providers: [
     {

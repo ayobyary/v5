@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 import { interval, Subscription } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
@@ -106,7 +107,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       
       try {
         const { username, password } = this.loginForm.value;
-        const response = await this.authService.login(username, password).toPromise();
+        const response = await firstValueFrom(this.authService.login(username, password));
         console.log('Login response:', response);
         
         // ذخیره توکن در localStorage

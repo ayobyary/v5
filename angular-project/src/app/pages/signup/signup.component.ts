@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-signup',
-  templateUrl: './signup.component.html',
+  templateUrl:'./signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
@@ -43,7 +44,7 @@ export class SignupComponent implements OnInit {
       
       try {
         const { email, password } = this.signupForm.value;
-        await this.authService.register({ email, password, role: 'user' }).toPromise();
+        await firstValueFrom(this.authService.register({ email, password, role: 'user' }));
         this.router.navigate(['/login']);
       } catch (error: any) {
         console.error('Signup failed:', error);

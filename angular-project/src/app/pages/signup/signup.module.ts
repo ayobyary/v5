@@ -24,6 +24,7 @@ import { SignupComponent } from './signup.component';
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule
-  ]
+  ],
+  exports: [SignupComponent]
 })
 export class SignupModule { } 
