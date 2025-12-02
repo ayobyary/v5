@@ -1,12 +1,63 @@
-# V5 Project
+# V5 Project - Full Stack Application
 
 A full-stack application with Angular frontend and Node.js backend.
 
 ---
 
-# پروژه V5
+# پروژه V5 - برنامه فول‌استک
 
 یک برنامه فول‌استک با فرانت‌اند Angular و بک‌اند Node.js.
+
+---
+
+## Project Structure | ساختار پروژه
+
+This is a monorepo containing two independent projects:
+
+این یک monorepo است که شامل دو پروژه مستقل است:
+
+```
+v5/
+├── angular-project/   # Angular frontend application (independent)
+└── backend/           # Node.js backend API (independent)
+```
+
+---
+
+## Quick Start | شروع سریع
+
+### Option 1: Run Both Together | گزینه 1: اجرای هر دو با هم
+
+From the root directory:
+
+از پوشه ریشه:
+
+```bash
+npm run install-all    # Install all dependencies
+npm start              # Start both servers
+```
+
+### Option 2: Run Independently | گزینه 2: اجرای مستقل
+
+#### Backend | بک‌اند:
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+Server will run on: `http://localhost:3000`
+
+#### Frontend | فرانت‌اند:
+
+```bash
+cd angular-project
+npm install
+npm start
+```
+
+Application will run on: `http://localhost:4200`
 
 ---
 
@@ -14,42 +65,7 @@ A full-stack application with Angular frontend and Node.js backend.
 
 - Node.js (v14 or higher | نسخه 14 یا بالاتر)
 - npm (v6 or higher | نسخه 6 یا بالاتر)
-- Angular CLI (v15 or higher | نسخه 15 یا بالاتر)
-
----
-
-## Installation | نصب
-
-### Step 1 | مرحله 1: Install all dependencies | نصب تمام وابستگی‌ها
-
-```bash
-npm run install-all
-```
-
-این دستور تمام وابستگی‌های لازم برای پروژه ریشه، بک‌اند و فرانت‌اند را نصب می‌کند.
-
-This command installs all required dependencies for root project, backend, and frontend.
-
-### Step 2 | مرحله 2: Start the development servers | راه‌اندازی سرورهای توسعه
-
-```bash
-npm start
-```
-
-این دستور هر دو سرور بک‌اند (پورت 3000) و فرانت‌اند (پورت 4200) را راه‌اندازی می‌کند.
-
-This will start both the backend (on port 3000) and frontend (on port 4200) servers.
-
----
-
-## Project Structure | ساختار پروژه
-
-```
-v5/
-├── angular-project/    # Angular frontend application | برنامه فرانت‌اند Angular
-├── backend/            # Node.js backend API | API بک‌اند Node.js
-└── backend-mongo/      # MongoDB integration (optional) | یکپارچه‌سازی MongoDB (اختیاری)
-```
+- Angular CLI (v15 or higher | نسخه 15 یا بالاتر) - Only for frontend
 
 ---
 
@@ -68,113 +84,71 @@ v5/
   - Email: `user2@example.com`
   - Password: `user223`
 
-> **Note | توجه:** می‌توانید از صفحه Register یا Signup یک حساب کاربری جدید ایجاد کنید.
-> You can also create a new account from the Register or Signup page.
+---
+
+## Documentation | مستندات
+
+Each project has its own README:
+
+هر پروژه README مخصوص خودش را دارد:
+
+- **[Backend README](./backend/README.md)** - Backend API documentation | مستندات API بک‌اند
+- **[Frontend README](./angular-project/README.md)** - Frontend application documentation | مستندات برنامه فرانت‌اند
 
 ---
 
 ## API Endpoints | نقاط اتصال API
 
-### Authentication | احراز هویت
+Base URL: `http://localhost:3000/api`
 
-- **POST** `/api/auth/register` - Register a new user | ثبت کاربر جدید
-- **POST** `/api/auth/login` - Login user | ورود کاربر
+### Authentication | احراز هویت
+- POST `/api/auth/register` - Register a new user
+- POST `/api/auth/login` - Login user
 
 ### User Dashboard | داشبورد کاربر
-
-- **GET** `/api/user/dashboard` - Get user dashboard data | دریافت اطلاعات داشبورد کاربر
+- GET `/api/user/dashboard` - Get user dashboard data
 
 ### Admin Dashboard | داشبورد مدیر
-
-- **GET** `/api/admin/dashboard` - Get admin dashboard data | دریافت اطلاعات داشبورد مدیر
+- GET `/api/admin/dashboard` - Get admin dashboard data
 
 ---
 
 ## Development | توسعه
 
-### Run Backend Only | فقط اجرای بک‌اند:
+### Backend Development | توسعه بک‌اند:
 
 ```bash
-npm run backend
+cd backend
+npm run dev
 ```
 
-### Run Frontend Only | فقط اجرای فرانت‌اند:
+### Frontend Development | توسعه فرانت‌اند:
 
 ```bash
-npm run frontend
+cd angular-project
+npm start
 ```
 
 ---
 
-## Features | ویژگی‌ها
-
-### Frontend | فرانت‌اند:
-- ✅ Angular 17
-- ✅ Material Design (Angular Material)
-- ✅ Tailwind CSS
-- ✅ Responsive Design | طراحی واکنش‌گرا
-- ✅ Authentication Guards | محافظ احراز هویت
-- ✅ HTTP Interceptors | اینترسپتور HTTP
-- ✅ User Dashboard | داشبورد کاربر
-- ✅ Admin Dashboard | داشبورد مدیر
-
-### Backend | بک‌اند:
-- ✅ Node.js & Express
-- ✅ JWT Authentication | احراز هویت JWT
-- ✅ bcrypt Password Hashing | هش کردن رمز عبور با bcrypt
-- ✅ RESTful API
-- ✅ CORS Enabled | فعال‌سازی CORS
-
----
-
-## Technologies Used | تکنولوژی‌های استفاده شده
-
-### Frontend | فرانت‌اند:
-- Angular 17.3.0
-- Angular Material 17.3.10
-- Tailwind CSS 3.4.17
-- RxJS 7.8.0
-- TypeScript 5.4.2
+## Technologies | تکنولوژی‌ها
 
 ### Backend | بک‌اند:
 - Node.js
-- Express.js 4.18.2
-- JSON Web Token (JWT) 9.0.2
-- bcrypt 5.1.1
-- CORS 2.8.5
+- Express.js
+- JWT Authentication
+- bcrypt
 
----
-
-## Troubleshooting | عیب‌یابی
-
-### Problem: Cannot find module errors | خطا: ماژول یافت نشد
-
-**Solution | راه‌حل:**
-```bash
-cd backend
-npm install
-cd ../angular-project
-npm install
-```
-
-### Problem: Port already in use | خطا: پورت در حال استفاده است
-
-**Solution | راه‌حل:**
-- Backend: Change port in `backend/app.js`
-- Frontend: Use `ng serve --port 4201`
+### Frontend | فرانت‌اند:
+- Angular 17
+- Angular Material
+- Tailwind CSS
+- TypeScript
 
 ---
 
 ## License | مجوز
 
 This project is open source | این پروژه متن‌باز است.
-
----
-
-## Contact | تماس
-
-For questions or issues, please open an issue on GitHub.
-
-برای سوالات یا مشکلات، لطفاً یک issue در GitHub ایجاد کنید.
 
 ---

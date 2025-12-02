@@ -5,10 +5,23 @@
   "scripts": {
     "start": "concurrently \"npm run backend\" \"npm run frontend\"",
     "backend": "cd backend && npm run dev",
+    "backend:prod": "cd backend && npm start",
     "frontend": "cd angular-project && ng serve",
-    "install-all": "npm install && cd backend && npm install && cd ../angular-project && npm install"
+    "frontend:build": "cd angular-project && ng build",
+    "frontend:build:prod": "cd angular-project && ng build --configuration production",
+    "install-all": "npm install && cd backend && npm install && cd ../angular-project && npm install",
+    "build": "npm run frontend:build",
+    "build:prod": "npm run frontend:build:prod"
   },
+  "keywords": [
+    "angular",
+    "nodejs",
+    "express",
+    "fullstack",
+    "jwt",
+    "authentication"
+  ],
   "devDependencies": {
     "concurrently": "^8.2.2"
   }
-} 
+}
